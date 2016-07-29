@@ -23,12 +23,11 @@ public class UserServlet extends BaseServlet {
         Query query = session.createQuery(hql);
         List<UserEntity> rs = query.list();
         request.setAttribute("dm", rs);
-        RequestDispatcher rd = request.getRequestDispatcher("/web/index.jsp");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
         try {
-            response.sendRedirect("/web/index.jsp");
-//            rd.forward(request, response);
-//        } catch (ServletException e) {
-//            e.printStackTrace();
+            rd.forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
