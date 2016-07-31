@@ -1,7 +1,9 @@
 package abidien.services;
 
 import abidien.models.IItem;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.lang.reflect.ParameterizedType;
@@ -11,7 +13,7 @@ import java.util.List;
 /**
  * Created by ABIDIEN on 31/07/2016.
  */
-public class DatabaseService<T extends IItem> implements IDataService<T> {
+public class DatabaseService<T> implements IDataService<T> {
     private final Class<T> clazz;
     public DatabaseService(Class<T> clazz) {
         this.clazz = clazz;
@@ -39,12 +41,20 @@ public class DatabaseService<T extends IItem> implements IDataService<T> {
     }
 
     @Override
-    public int save(T model) {
-        return 0;
-    }
-
-    @Override
-    public int update(T model) {
+    public int saveOrUpdate(T model) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try{
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(model);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            //Log the exception
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
         return 0;
     }
 

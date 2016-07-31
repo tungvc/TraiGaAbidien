@@ -35,7 +35,7 @@ public class LoginServlet extends BaseServlet {
             }
             url = "/web/dashboard";
             String redirectUrl = request.getParameter("redirectUrl");
-            if (redirectUrl != null)
+            if (redirectUrl != null && !redirectUrl.isEmpty())
                 url = URLDecoder.decode(redirectUrl, "UTF-8");
         }
         response.sendRedirect(url);

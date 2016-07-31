@@ -19,10 +19,7 @@ public class UserEntity implements IItem {
     public int getId() {
         return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id; }
 
     @Basic
     @Column(name = "name")

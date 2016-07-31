@@ -1,5 +1,6 @@
 package abidien.chuongga;
 
+import abidien.models.AdsenseAccountEntity;
 import abidien.models.UserEntity;
 import abidien.services.DatabaseService;
 import abidien.services.IDataService;
@@ -9,10 +10,17 @@ import abidien.services.IDataService;
  */
 public class Environment {
     private static IDataService<UserEntity> userDataService;
+    private static IDataService<AdsenseAccountEntity> adsenseAccountDataService;
 
     public static IDataService<UserEntity> getUserDataService() {
         if (userDataService == null)
             userDataService = new DatabaseService<UserEntity>(UserEntity.class);
         return userDataService;
+    }
+
+    public static IDataService<AdsenseAccountEntity> getAdsenseAccountDataService() {
+        if (adsenseAccountDataService == null)
+            adsenseAccountDataService = new DatabaseService<AdsenseAccountEntity>(AdsenseAccountEntity.class);
+        return adsenseAccountDataService;
     }
 }

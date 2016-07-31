@@ -8,10 +8,9 @@ import java.util.List;
 /**
  * Created by ABIDIEN on 31/07/2016.
  */
-public interface IDataService<T extends IItem> {
+public interface IDataService<T> {
     public T load(int id);
     public List<T> loadAll();
-    public int save(T model);
-    public int update(T model);
+    public int saveOrUpdate(T model);
     public int delete(int id);
 }
