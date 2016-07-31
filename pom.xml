@@ -21,11 +21,28 @@
                         <compilerArgument></compilerArgument>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-maven-plugin</artifactId>
+                    <version>9.3.11.v20160721</version>
+                    <configuration>
+                        <webAppConfig>
+                            <contextPath>/</contextPath>
+                        </webAppConfig>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.2.1.Final</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
@@ -60,11 +77,51 @@
         </dependency>
 
         <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <version>2.2</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.tiles/tiles-core &ndash;&gt;
+                <dependency>
+                    <groupId>org.apache.tiles</groupId>
+                    <artifactId>tiles-core</artifactId>
+                    <version>3.0.5</version>
+                </dependency>
+
+                &lt;!&ndash; https://mvnrepository.com/artifact/org.apache.tiles/tiles-api &ndash;&gt;
+                <dependency>
+                    <groupId>org.apache.tiles</groupId>
+                    <artifactId>tiles-api</artifactId>
+                    <version>3.0.5</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.tiles</groupId>
+                    <artifactId>tiles-servlet</artifactId>
+                    <version>3.0.5</version>
+                </dependency>
+
+                <dependency>
+                    <groupId>org.apache.tiles</groupId>
+                    <artifactId>tiles-jsp</artifactId>
+                    <version>3.0.5</version>
+                </dependency>-->
+
+
+
+        <dependency>
+            <groupId>org.apache.tiles</groupId>
+            <artifactId>tiles-extras</artifactId>
+            <version>3.0.5</version>
+        </dependency>
+
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>6.0.3</version>
         </dependency>
-
 
         <dependency>
             <groupId>com.google.api-client</groupId>
