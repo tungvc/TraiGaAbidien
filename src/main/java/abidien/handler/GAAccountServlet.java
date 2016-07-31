@@ -2,6 +2,7 @@ package abidien.handler;
 
 import abidien.common.Helper;
 import abidien.controllers.BaseServlet;
+import abidien.models.UserEntity;
 import abidien.services.adsense.api.AdsenseService;
 import abidien.services.adsense.api.GetAllAccounts;
 import abidien.services.adsense.api.GetAllAdClients;
@@ -30,27 +31,29 @@ public class GAAccountServlet extends BaseServlet {
             return;
         String uri = request.getRequestURI().toLowerCase();
         String methodName = uri.substring(Math.min(uri.length(), request.getServletPath().length() + 1));
+        UserEntity user = (UserEntity)request.getSession().getAttribute("user");
         if (request.getParameter("add_account") != null) {
             response.sendRedirect(AdsenseService.getInstance().genLinkAddGAAccount());
         } if (methodName.equals("callback")) {
-            AdsenseService.getInstance().addGAAccount((String)request.getSession().getAttribute("user"), request.getParameter("code"));
+            AdsenseService.getInstance().addGAAccount(user.getId() + "", request.getParameter("code"));
             response.sendRedirect("/web/ga_account");
         }
         else
             try {
-                AdSense adsense= AdsenseService.getInstance().getAdsense((String)request.getSession().getAttribute("user"));
+                AdSense adsense= AdsenseService.getInstance().getAdsense(user.getId() + "");
                 if (adsense != null) {
                     ArrayList<GAAccountResponse> resp = new ArrayList<>();
                     Accounts accounts = GetAllAccounts.run(adsense, 50);
-                    List<Account> accountList = accounts.getItems();
-                    for (Account account: accounts.getItems()) {
-                        AdClients adClients = GetAllAdClients.run(adsense, account.getId(), 50);
-                        String rs = "";
-                        for (AdClient adClient: adClients.getItems()) {
-                             rs += String.format("%s - %s | ", adClient.getProductCode(), adClient.getId());
+                    if (accounts != null) {
+                        for (Account account : accounts.getItems()) {
+                            AdClients adClients = GetAllAdClients.run(adsense, account.getId(), 50);
+                            String rs = "";
+                            for (AdClient adClient : adClients.getItems()) {
+                                rs += String.format("%s - %s | ", adClient.getProductCode(), adClient.getId());
+                            }
+                            if (rs.length() > 0) rs = rs.substring(0, rs.length() - 3);
+                            resp.add(new GAAccountResponse(account.getId(), account.getName(), rs));
                         }
-                        if (rs.length() > 0) rs = rs.substring(0, rs.length() - 3);
-                        resp.add(new GAAccountResponse(account.getId(), account.getName(), rs));
                     }
                     request.setAttribute("accountAdsenses", resp);
 

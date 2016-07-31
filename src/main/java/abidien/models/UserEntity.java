@@ -6,12 +6,13 @@ import javax.persistence.*;
  * Created by ABIDIEN on 03/07/2016.
  */
 @Entity
-@Table(name = "user", schema = "chuong_ga", catalog = "")
-public class UserEntity {
+@Table(schema = "chuong_ga", catalog = "")
+public class UserEntity implements IItem {
     private int id;
     private String name;
     private String email;
     private String avatar;
+    private String password;
 
     @Id @GeneratedValue
     @Column(name = "id")
@@ -53,6 +54,15 @@ public class UserEntity {
         this.avatar = avatar;
     }
 
+    @Basic
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -61,19 +71,33 @@ public class UserEntity {
         UserEntity that = (UserEntity) o;
 
         if (id != that.id) return false;
+        if (disable != that.disable) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        if (!email.equals(that.email)) return false;
         if (avatar != null ? !avatar.equals(that.avatar) : that.avatar != null) return false;
+        return password.equals(that.password);
 
-        return true;
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + email.hashCode();
         result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
+        result = 31 * result + password.hashCode();
+        result = 31 * result + (disable ? 1 : 0);
         return result;
+    }
+
+    private boolean disable;
+
+    @Basic
+    public boolean isDisable() {
+        return disable;
+    }
+
+    public void setDisable(boolean disable) {
+        this.disable = disable;
     }
 }

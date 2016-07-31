@@ -11,7 +11,6 @@
     <property name="hibernate.connection.password"></property>
     <property name="hibernate.hbm2ddl.auto">update</property>
     <mapping class="abidien.models.UserEntity"/>
-    <mapping class="abidien.models.AccountEntity"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

@@ -2,8 +2,8 @@ package abidien.controllers;
 
 import abidien.models.UserEntity;
 import abidien.services.HibernateUtil;
-import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

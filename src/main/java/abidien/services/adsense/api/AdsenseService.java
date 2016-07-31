@@ -35,8 +35,6 @@ public class AdsenseService {
         return instance;
     }
 
-
-
     private static final String APPLICATION_NAME = "TraiGa";
 
     private static final java.io.File DATA_STORE_DIR =

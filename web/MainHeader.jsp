@@ -25,7 +25,7 @@
                             <div class="profile_img">
                                 <span style="background:url(/resources/images/1.jpg) no-repeat center"> </span>
                                 <div class="user-name">
-                                    <p>${user}<span>Administrator</span></p>
+                                    <p>${user.getName()}<span>Administrator</span></p>
                                 </div>
                                 <i class="lnr lnr-chevron-down"></i>
                                 <i class="lnr lnr-chevron-up"></i>
