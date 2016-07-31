@@ -13,10 +13,12 @@ import java.io.IOException;
 public class DashboardServlet extends BaseServlet {
     @Override
     public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        request.setAttribute("pageName", "Dashboard");
-        String url = "/Templates/CreateMainPage.jsp";
-        RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
-        rd.forward(request, response);
+        if (request.getSession().getAttribute("user") != null) {
+            request.setAttribute("pageName", "Dashboard");
+            String url = "/Templates/CreateMainPage.jsp";
+            RequestDispatcher rd = getServletContext().getRequestDispatcher(url);
+            rd.forward(request, response);
+        } else
+            response.sendRedirect("/web/login");
     }
 }

@@ -2,6 +2,8 @@ package abidien.chuongga;
 
 import abidien.controllers.UserServlet;
 import abidien.handler.DashboardServlet;
+import abidien.handler.GAAccountServlet;
+import abidien.handler.LoginServlet;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -18,7 +20,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 
 import java.util.Arrays;
 
-public class JettyJspExampleMain {
+public class Main {
     public static void main(String[] args) throws Exception {
         Server server = new Server();
 
@@ -45,7 +47,9 @@ public class JettyJspExampleMain {
         webapp.setWar("web");
 
         webapp.addServlet(new ServletHolder(new UserServlet()),"/rest/user/*");
-        webapp.addServlet(new ServletHolder(new DashboardServlet()), "/web/*");
+        webapp.addServlet(new ServletHolder(new DashboardServlet()), "/web/dashboard");
+        webapp.addServlet(new ServletHolder(new LoginServlet()), "/web/login");
+        webapp.addServlet(new ServletHolder(new GAAccountServlet()), "/web/ga_account/*");
 
         server.setHandler(webapp);
 

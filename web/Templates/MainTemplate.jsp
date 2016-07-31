@@ -41,15 +41,18 @@
 </head>
 
 <body class="sticky-header left-side-collapsed" onload="initMap()">
-    <section>
-        <tiles:insertAttribute name="left-side"/>
-        <tiles:insertAttribute name="main-content"/>
-        <%--<tiles:insertAttribute name="footer"/>--%>
-    </section>
+    <div class="main-content">
+        <section>
+            <tiles:insertAttribute name="header"/>
+            <tiles:insertAttribute name="left-side"/>
+            <tiles:insertAttribute name="main-content"/>
+            <%--<tiles:insertAttribute name="footer"/>--%>
+        </section>
 
-    <script src="/resources/js/jquery.nicescroll.js"></script>
-    <script src="/resources/js/scripts.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="/resources/js/bootstrap.min.js"></script>
+        <script src="/resources/js/jquery.nicescroll.js"></script>
+        <script src="/resources/js/scripts.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="/resources/js/bootstrap.min.js"></script>
+    </div>
 </body>
 </html>
