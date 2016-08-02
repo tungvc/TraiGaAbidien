@@ -7,11 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<html style="overflow: auto">
+<html>
 <head>
     <title><tiles:getAsString name="title"/></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <%--<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>--%>
     <!-- Bootstrap Core CSS -->
     <link href="/resources/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
     <!-- Custom CSS -->
@@ -23,7 +22,7 @@
     <link rel="stylesheet" href="/resources/css/icon-font.min.css" type='text/css' />
     <!-- //lined-icons -->
     <!-- chart -->
-    <script src="/resources/js/Chart.js"></script>
+    <script src="/resources/js/Chart_2.2.1.js"></script>
     <!-- //chart -->
     <!--animate-->
     <link href="/resources/css/animate.css" rel="stylesheet" type="text/css" media="all">
@@ -54,7 +53,7 @@
             <%--<tiles:insertAttribute name="footer"/>--%>
         </section>
 
-        <script src="/resources/js/jquery.nicescroll.js"></script>
+        <%--<script src="/resources/js/jquery.nicescroll.js"></script>--%>
         <script src="/resources/js/scripts.js"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="/resources/js/bootstrap.min.js"></script>

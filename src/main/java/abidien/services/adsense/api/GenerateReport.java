@@ -43,7 +43,8 @@ public class GenerateReport {
 
     // Run report.
     AdsenseReportsGenerateResponse response = request.execute();
-    List<List<String>> rows = fillMissingDates(response);
+    List<Double> pointChart = new ArrayList<>();
+    List<List<String>> rows = fillMissingDates(response, pointChart);
 
     List<String> headers = new ArrayList<>();
     if (rows != null && !rows.isEmpty()) {
@@ -52,7 +53,10 @@ public class GenerateReport {
         headers.add(header.getName());
         //System.out.printf("%25s", header.getName());
       }
-      return new ReportResponse(null, headers, rows);
+      String points = "";
+      for (Double p: pointChart)
+        points += p.intValue() + ",";
+      return new ReportResponse(points.substring(0, points.length() - 2), headers, rows);
 //      System.out.println();
 //
 //      // Display results.
@@ -81,7 +85,7 @@ public class GenerateReport {
     return parameter.replace("\\", "\\\\").replace(",", "\\,");
   }
 
-  public static List<List<String>> fillMissingDates(AdsenseReportsGenerateResponse response)
+  public static List<List<String>> fillMissingDates(AdsenseReportsGenerateResponse response, List<Double> pointChart)
           throws ParseException {
     DateFormat fullDate = new SimpleDateFormat("yyyy-MM-dd");
     Date startDate = fullDate.parse(response.getStartDate());
@@ -136,9 +140,11 @@ public class GenerateReport {
       if (rowDate != null && date.equals(rowDate)) {
         processedData.add(currentRow);
         currentPos += 1;
+        pointChart.add(Double.valueOf(currentRow.get(1)));
       } else {
         List<String> newRow = new ArrayList<String>();
         newRow.add(dateFormat.format(date));
+        pointChart.add(0d);
         for (int i = 1; i < response.getHeaders().size(); i++) {
           newRow.add("no data");
         }

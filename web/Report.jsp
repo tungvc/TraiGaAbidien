@@ -10,20 +10,26 @@
 <div class="line-bottom-grid">
     <div class="grid_1">
         <h4>Report</h4>
-        <canvas id="bar1" height="100" width="600" style="width: 600px; height: 100px;"></canvas>
+        <canvas id="bar1" fullWidth=true height="50"></canvas>
         <script>
             var barChartData = {
-                labels : ["Mon","Tue","Wed","Thu","Fri","Sat","Mon","Tue","Wed","Thu"],
+                labels : [<c:forEach var="p" items="${resp.getPointChart()}" varStatus="loop">"${loop.index}",</c:forEach>],
                 datasets : [
                     {
-                        fillColor : "#8BC34A",
-                        strokeColor : "#8BC34A",
-                        data : [30,45,55,70,40,25,15,8,5,2]
+                        label: 'PAGE VIEWS',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1,
+                        data : [${resp.getPointChart()}]
                     }
                 ]
 
             };
-            new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData);
+            var option = {
+                fullWidth: true
+            };
+            //new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData);
+            new Chart(document.getElementById("bar1"),{type: 'bar', data: barChartData, option: option});
         </script>
     </div>
 </div>
