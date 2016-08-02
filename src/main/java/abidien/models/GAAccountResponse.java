@@ -5,24 +5,24 @@ package abidien.models;
  */
 public class GAAccountResponse {
     String id;
-    String name;
-    String des;
+    String accountId;
+    String adClientId;
 
-    public GAAccountResponse(String _id, String _name, String _des) {
+    public GAAccountResponse(String _id, String _accountId, String _adClientId) {
         id = _id;
-        name = _name;
-        des = _des;
+        accountId = _accountId;
+        adClientId = _adClientId;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getAccountId() {
+        return accountId;
     }
 
-    public String getDes() {
-        return des;
+    public String getAdClientId() {
+        return adClientId;
     }
 }

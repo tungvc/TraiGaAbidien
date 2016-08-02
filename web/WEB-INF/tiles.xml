@@ -17,5 +17,9 @@
         <put-attribute name="title" value="GA Account" />
         <put-attribute name="main-content" value="/GAAccount.jsp"/>
     </definition>
+    <definition name="Report" extends="MainPage">
+        <put-attribute name="title" value="Report" />
+        <put-attribute name="main-content" value="/Report.jsp"/>
+    </definition>
 
 </tiles-definitions>

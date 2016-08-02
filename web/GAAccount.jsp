@@ -14,16 +14,18 @@
     <thead>
     <tr>
         <th>ID</th>
-        <th>Name</th>
-        <th>Description</th>
+        <th>Account</th>
+        <th>Ad Client</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
     <c:forEach var="acc" items="${accountAdsenses}">
         <tr class="active">
             <td>${acc.getId()}</td>
-            <td>${acc.getName()}</td>
-            <td>${acc.getDes()}</td>
+            <td>${acc.getAccountId()}</td>
+            <td>${acc.getAdClientId()}</td>
+            <td><a href="/web/report?id=${acc.getId()}&accountId=${acc.getAccountId()}&adClientId=${acc.getAdClientId()}" class="btn btn_5 btn-lg btn-info">View Report</a></td>
         </tr>
     </c:forEach>
     </tbody>

@@ -4,6 +4,7 @@ import abidien.controllers.UserServlet;
 import abidien.handler.DashboardServlet;
 import abidien.handler.GAAccountServlet;
 import abidien.handler.LoginServlet;
+import abidien.handler.ReportServlet;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -50,6 +51,7 @@ public class Main {
         webapp.addServlet(new ServletHolder(new DashboardServlet()), "/web/dashboard");
         webapp.addServlet(new ServletHolder(new LoginServlet()), "/web/login");
         webapp.addServlet(new ServletHolder(new GAAccountServlet()), "/web/ga_account/*");
+        webapp.addServlet(new ServletHolder(new ReportServlet()), "/web/report");
 
         server.setHandler(webapp);
 

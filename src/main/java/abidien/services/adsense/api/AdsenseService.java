@@ -56,7 +56,7 @@ public class AdsenseService {
             flow = new GoogleAuthorizationCodeFlow.Builder(
                     httpTransport, JSON_FACTORY, clientSecrets,
                     Collections.singleton(AdSenseScopes.ADSENSE_READONLY)).setDataStoreFactory(
-                    dataStoreFactory).build();
+                    dataStoreFactory).setAccessType("offline").setApprovalPrompt("force").build();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (GeneralSecurityException e) {
@@ -73,12 +73,15 @@ public class AdsenseService {
             e.printStackTrace();
             return null;
         }
+        return getAdsense(credential);
+    }
+
+    public AdSense getAdsense(Credential credential) {
         if (credential == null) return null;
         // Set up AdSense Management API client.
         AdSense adsense = new AdSense.Builder(
                 new NetHttpTransport(), JSON_FACTORY, credential).setApplicationName(APPLICATION_NAME)
                 .build();
-
         return adsense;
     }
 

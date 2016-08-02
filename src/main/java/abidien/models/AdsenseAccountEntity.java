@@ -1,8 +1,14 @@
 package abidien.models;
 
+import com.google.api.services.adsense.AdSense;
+
 import javax.persistence.Basic;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by ABIDIEN on 01/08/2016.
@@ -13,6 +19,8 @@ public class AdsenseAccountEntity {
     private String id;
     private int userId;
     private boolean disable;
+    public AdSense adsense;
+    public List<AdClientsEntity> adClients = new ArrayList<>();
 
     public AdsenseAccountEntity(String id, int userId) {
         this.id = id;
@@ -49,4 +57,5 @@ public class AdsenseAccountEntity {
     public void setDisable(boolean disable) {
         this.disable = disable;
     }
+
 }

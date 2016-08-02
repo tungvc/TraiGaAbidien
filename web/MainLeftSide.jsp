@@ -14,7 +14,7 @@
         <h1><a href="index.html">Trại <span>Gà</span></a></h1>
     </div>
     <div class="logo-icon text-center">
-        <a href="index.html"><i class="lnr lnr-home"></i> </a>
+        <a href="/web/dashboard"><i class="lnr lnr-home"></i> </a>
     </div>
 
     <!--logo and iconic logo end-->

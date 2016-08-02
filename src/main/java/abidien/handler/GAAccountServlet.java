@@ -3,24 +3,21 @@ package abidien.handler;
 import abidien.chuongga.Environment;
 import abidien.common.Helper;
 import abidien.controllers.BaseServlet;
+import abidien.models.AdClientsEntity;
 import abidien.models.AdsenseAccountEntity;
+import abidien.models.GAAccountResponse;
 import abidien.models.UserEntity;
 import abidien.services.adsense.api.AdsenseService;
-import abidien.services.adsense.api.GetAllAccounts;
-import abidien.services.adsense.api.GetAllAdClients;
-import abidien.models.GAAccountResponse;
+import abidien.services.adsense.api.GenerateReport;
+import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.services.adsense.AdSense;
-import com.google.api.services.adsense.model.Account;
-import com.google.api.services.adsense.model.Accounts;
-import com.google.api.services.adsense.model.AdClient;
-import com.google.api.services.adsense.model.AdClients;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created by ABIDIEN on 31/07/2016.
@@ -37,30 +34,30 @@ public class GAAccountServlet extends BaseServlet {
         if (request.getParameter("add_account") != null) {
             response.sendRedirect(AdsenseService.getInstance().genLinkAddGAAccount());
             return;
-        } if (methodName.equals("callback")) {
+        }
+        if (methodName.equals("callback")) {
             String adsenseAccountId = user.getId() + "_" + System.currentTimeMillis();
-            if (AdsenseService.getInstance().addGAAccount(adsenseAccountId, request.getParameter("code")) != null) {
-                Environment.getAdsenseAccountDataService().saveOrUpdate(new AdsenseAccountEntity(adsenseAccountId, user.getId()));
+            Credential credential = AdsenseService.getInstance().addGAAccount(adsenseAccountId, request.getParameter("code"));
+            if (credential != null) {
+                Environment.getAdsenseAccountService().saveOrUpdate(new AdsenseAccountEntity(adsenseAccountId, user.getId()));
             }
             response.sendRedirect("/web/ga_account");
         }
         else {
             try {
                 ArrayList<GAAccountResponse> resp = new ArrayList<>();
-                List<AdsenseAccountEntity> adsenseAccountList = Environment.getAdsenseAccountDataService().loadAll();
+                Collection<AdsenseAccountEntity> adsenseAccountList = Environment.getAdsenseAccountService().all.values();
                 for (AdsenseAccountEntity adsenseAccount: adsenseAccountList) {
-                    AdSense adsense = AdsenseService.getInstance().getAdsense(adsenseAccount.getId());
-                    if (adsense != null) {
-                        Accounts accounts = GetAllAccounts.run(adsense, 50);
-                        if (accounts != null) {
-                            for (Account account : accounts.getItems()) {
-                                AdClients adClients = GetAllAdClients.run(adsense, account.getId(), 50);
-                                String rs = "";
-                                for (AdClient adClient : adClients.getItems()) {
-                                    rs += String.format("%s - %s | ", adClient.getProductCode(), adClient.getId());
+                    if (adsenseAccount.getUserId() == user.getId()) {
+                        AdSense adsense = adsenseAccount.adsense;
+                        if (adsense != null) {
+                            try {
+                                for (AdClientsEntity adClient : adsenseAccount.adClients) {
+                                    resp.add(new GAAccountResponse(adsenseAccount.getId(), adClient.accountId, adClient.adClientId));
+//                                    GenerateReport.run(adsense, adClient.accountId, adClient.adClientId);
                                 }
-                                if (rs.length() > 0) rs = rs.substring(0, rs.length() - 3);
-                                resp.add(new GAAccountResponse(account.getId(), account.getName(), rs));
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                         }
                     }

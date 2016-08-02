@@ -7,9 +7,10 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-<html>
+<html style="overflow: auto">
 <head>
     <title><tiles:getAsString name="title"/></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- Bootstrap Core CSS -->
     <link href="/resources/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
@@ -43,9 +44,13 @@
 <body class="sticky-header left-side-collapsed" onload="initMap()">
     <div class="main-content">
         <section>
-            <tiles:insertAttribute name="header"/>
             <tiles:insertAttribute name="left-side"/>
-            <tiles:insertAttribute name="main-content"/>
+            <div class="main-content">
+                <tiles:insertAttribute name="header"/>
+                <div id="page-wrapper">
+                    <tiles:insertAttribute name="main-content"/>
+                </div>
+            </div>
             <%--<tiles:insertAttribute name="footer"/>--%>
         </section>
 
