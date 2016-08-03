@@ -1,0 +1,1 @@
+java -jar target/ChuongGa.jar %* > servicelog.txt
