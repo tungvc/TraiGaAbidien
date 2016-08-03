@@ -53,8 +53,7 @@ public class GAAccountServlet extends BaseServlet {
                         if (adsense != null) {
                             try {
                                 for (AdClientsEntity adClient : adsenseAccount.adClients) {
-                                    resp.add(new GAAccountResponse(adsenseAccount.getId(), adClient.accountId, adClient.adClientId));
-//                                    GenerateReport.run(adsense, adClient.accountId, adClient.adClientId);
+                                    resp.add(new GAAccountResponse(adsenseAccount.getId(), adClient.name, adClient.accountId, adClient.adClientId, adClient.errorList.size()));
                                 }
                             } catch (Exception e) {
                                 e.printStackTrace();
