@@ -34,18 +34,19 @@ public class Main {
         server.setConnectors(new Connector[]{connector});
 
         WebAppContext webapp = new WebAppContext();
+        webapp.setDescriptor("web/WEB-INF/web.xml");
+        webapp.setContextPath("/");
+        webapp.setResourceBase("web");
+        webapp.setParentLoaderPriority(true);
 
-    //3. Including the JSTL jars for the webapp.
-        webapp.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern",".*/[^/]*jstl.*\\.jar$");
+        //3. Including the JSTL jars for the webapp.
+//        webapp.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern",".*/[^/]*jstl.*\\.jar$");
         webapp.setAttribute("org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern",".*/[^/]*tiles.*\\.jar$");
 
         //4. Enabling the Annotation based configuration
         Configuration.ClassList classlist = Configuration.ClassList.setServerDefault(server);
         classlist.addAfter("org.eclipse.jetty.webapp.FragmentConfiguration", "org.eclipse.jetty.plus.webapp.EnvConfiguration", "org.eclipse.jetty.plus.webapp.PlusConfiguration");
         classlist.addBefore("org.eclipse.jetty.webapp.JettyWebXmlConfiguration", "org.eclipse.jetty.annotations.AnnotationConfiguration");
-
-        webapp.setContextPath("/");
-        webapp.setWar("web");
 
         webapp.addServlet(new ServletHolder(new UserServlet()),"/rest/user/*");
         webapp.addServlet(new ServletHolder(new DashboardServlet()), "/web/dashboard");
