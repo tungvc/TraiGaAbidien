@@ -35,7 +35,7 @@ public class GAAccountServlet extends BaseServlet {
             response.sendRedirect(AdsenseService.getInstance().genLinkAddGAAccount());
             return;
         }
-        if (methodName.equals("callback")) {
+        if (methodName.equals("callback") && request.getParameter("code") != null) {
             String adsenseAccountId = user.getId() + "_" + System.currentTimeMillis();
             Credential credential = AdsenseService.getInstance().addGAAccount(adsenseAccountId, request.getParameter("code"));
             if (credential != null) {

@@ -25,17 +25,18 @@ public class GenerateReport {
    * @param accountId the ID for the account to be used.
    * @param adClientId the ad client ID on which to run the report.
    * @throws Exception
+   * startDate, endDate format "YYYY-MM-DD"
    */
-  public static ReportResponse run(AdSense adsense, String accountId, String adClientId) throws Exception {
-    String startDate = "today-30d";
-    String endDate = "today-1d";
+  public static ReportResponse run(AdSense adsense, String accountId, String adClientId, String startDate, String endDate) throws Exception {
+    if (startDate == null || startDate.isEmpty()) startDate = "today-7d";
+    if (endDate == null || endDate.isEmpty()) endDate = "today-1d";
     Generate request = adsense.accounts().reports().generate(accountId, startDate, endDate);
 
     // Specify the desired ad client using a filter.
     request.setFilter(Arrays.asList("AD_CLIENT_ID==" + escapeFilterParameter(adClientId)));
 
-    request.setMetric(Arrays.asList("PAGE_VIEWS", "AD_REQUESTS", "AD_REQUESTS_COVERAGE", "CLICKS",
-        "AD_REQUESTS_CTR", "COST_PER_CLICK", "AD_REQUESTS_RPM", "EARNINGS"));
+    request.setMetric(Arrays.asList("PAGE_VIEWS", "AD_REQUESTS", /*"AD_REQUESTS_COVERAGE", */"CLICKS",
+        /*"AD_REQUESTS_CTR", */"COST_PER_CLICK", "PAGE_VIEWS_RPM", "EARNINGS"));
     request.setDimension(Arrays.asList("DATE"));
 
     // Sort by ascending date.

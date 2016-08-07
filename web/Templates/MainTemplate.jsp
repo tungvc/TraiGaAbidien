@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<!DOCTYPE html>
 <html>
 <head>
     <title><tiles:getAsString name="title"/></title>
@@ -41,22 +42,20 @@
 </head>
 
 <body class="sticky-header left-side-collapsed" onload="initMap()">
-    <div class="main-content">
-        <section>
-            <tiles:insertAttribute name="left-side"/>
-            <div class="main-content">
-                <tiles:insertAttribute name="header"/>
-                <div id="page-wrapper">
-                    <tiles:insertAttribute name="main-content"/>
-                </div>
+    <section>
+        <tiles:insertAttribute name="left-side"/>
+        <div class="main-content">
+            <tiles:insertAttribute name="header"/>
+            <div id="page-wrapper">
+                <tiles:insertAttribute name="main-content"/>
             </div>
-            <%--<tiles:insertAttribute name="footer"/>--%>
-        </section>
+        </div>
+        <%--<tiles:insertAttribute name="footer"/>--%>
+    </section>
 
-        <%--<script src="/resources/js/jquery.nicescroll.js"></script>--%>
-        <script src="/resources/js/scripts.js"></script>
-        <!-- Bootstrap Core JavaScript -->
-        <script src="/resources/js/bootstrap.min.js"></script>
-    </div>
+    <%--<script src="/resources/js/jquery.nicescroll.js"></script>--%>
+    <script src="/resources/js/scripts.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/resources/js/bootstrap.min.js"></script>
 </body>
 </html>

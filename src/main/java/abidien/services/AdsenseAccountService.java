@@ -53,7 +53,7 @@ public class AdsenseAccountService extends DatabaseService<AdsenseAccountEntity>
                         AdClients adClients = GetAllAdClients.run(adsense, account.getId(), 50);
                         List<Alert> alertList = GetAllAlerts.run(adsense, account.getId());
                         for (AdClient adClient : adClients.getItems()) {
-                            adsenseAccount.adClients.add(new AdClientsEntity(account.getName(), account.getId(), adClient.getId(), alertList));
+                            adsenseAccount.adClients.add(new AdClientsEntity(account.getId(), adClient.getId(), account.getName(), alertList));
                         }
                     }
                 }

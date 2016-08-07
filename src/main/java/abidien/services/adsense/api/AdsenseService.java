@@ -38,10 +38,9 @@ public class AdsenseService {
     private static final String APPLICATION_NAME = "TraiGa";
 
     private static final java.io.File DATA_STORE_DIR =
-        new java.io.File(System.getProperty("user.home"), ".store/adsense_management_sample");
+        new java.io.File(Config.adsenseDB);
 
     private static FileDataStoreFactory dataStoreFactory;
-
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static HttpTransport httpTransport;
     private static GoogleAuthorizationCodeFlow flow;

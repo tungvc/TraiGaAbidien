@@ -12,6 +12,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by ABIDIEN on 02/08/2016.
@@ -24,13 +26,27 @@ public class ReportServlet extends BaseServlet {
         String adsenseId = request.getParameter("id");
         String accountId = request.getParameter("accountId");
         String adClientId = request.getParameter("adClientId");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+
+        if (startDate == null || endDate == null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date now = new Date();
+            endDate = sdf.format(new Date());
+            startDate = sdf.format(new Date(System.currentTimeMillis() - 6l*24*3600*1000));
+        }
 
         AdsenseAccountEntity adsenseAccountEntity = Environment.getAdsenseAccountService().load(adsenseId);
         if (adsenseAccountEntity != null && accountId != null && adClientId != null &&
             adsenseAccountEntity.getUserId() == ((UserEntity)request.getSession().getAttribute("user")).getId()) {
             try {
-                ReportResponse resp = GenerateReport.run(adsenseAccountEntity.adsense, accountId, adClientId);
+                ReportResponse resp = GenerateReport.run(adsenseAccountEntity.adsense, accountId, adClientId, startDate, endDate);
                 request.setAttribute("resp", resp);
+                request.setAttribute("adsenseId", adsenseId);
+                request.setAttribute("accountId", accountId);
+                request.setAttribute("adClientId", adClientId);
+                request.setAttribute("startDate", startDate);
+                request.setAttribute("endDate", endDate);
             } catch (Exception e) {
                 e.printStackTrace();
             }

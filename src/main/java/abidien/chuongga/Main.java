@@ -1,5 +1,6 @@
 package abidien.chuongga;
 
+import abidien.common.Config;
 import abidien.controllers.UserServlet;
 import abidien.handler.DashboardServlet;
 import abidien.handler.GAAccountServlet;
@@ -26,7 +27,7 @@ public class Main {
         Server server = new Server();
 
         ServerConnector connector = new ServerConnector(server);
-        connector.setPort(8080);
+        connector.setPort(Config.port);
         connector.setAcceptorPriorityDelta(Runtime.getRuntime().availableProcessors());
         connector.setAcceptQueueSize(5000);
         connector.addBean(new QueuedThreadPool(Runtime.getRuntime().availableProcessors() * 4));
@@ -34,7 +35,6 @@ public class Main {
         server.setConnectors(new Connector[]{connector});
 
         WebAppContext webapp = new WebAppContext();
-        webapp.setDescriptor("web/WEB-INF/web.xml");
         webapp.setContextPath("/");
         webapp.setResourceBase("web");
         webapp.setParentLoaderPriority(true);
