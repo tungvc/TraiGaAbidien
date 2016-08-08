@@ -5,9 +5,8 @@ import com.google.api.services.adsense.AdSense;
 import com.google.api.services.adsense.AdSense.Accounts.Reports.Generate;
 import com.google.api.services.adsense.model.AdsenseReportsGenerateResponse;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.math.RoundingMode;
+import java.text.*;
 import java.util.*;
 
 /**
@@ -88,6 +87,10 @@ public class GenerateReport {
 
   public static List<List<String>> fillMissingDates(AdsenseReportsGenerateResponse response, List<Double> pointChart)
           throws ParseException {
+    Locale locale  = new Locale("en", "UK");
+    String pattern = "###.##";
+    DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(locale);
+    df.applyPattern(pattern);
     DateFormat fullDate = new SimpleDateFormat("yyyy-MM-dd");
     Date startDate = fullDate.parse(response.getStartDate());
     Date endDate = fullDate.parse(response.getEndDate());
@@ -141,13 +144,15 @@ public class GenerateReport {
       if (rowDate != null && date.equals(rowDate)) {
         processedData.add(currentRow);
         currentPos += 1;
-        pointChart.add(Double.valueOf(currentRow.get(1)));
+        String value = currentRow.get(1);
+        if (value.isEmpty()) value = "0";
+        pointChart.add(Double.valueOf(value));
       } else {
         List<String> newRow = new ArrayList<String>();
         newRow.add(dateFormat.format(date));
         pointChart.add(0d);
         for (int i = 1; i < response.getHeaders().size(); i++) {
-          newRow.add("no data");
+          newRow.add("0");
         }
         processedData.add(newRow);
       }
@@ -163,6 +168,47 @@ public class GenerateReport {
       date = calendar.getTime();
     }
 
+    List<String> total = new ArrayList<>();
+    total.add("TOTAL");
+    //calculate total
+    for (int i = 1; i < response.getHeaders().size(); i++) {
+      String name = response.getHeaders().get(i).getName();
+      switch (name) {
+        case "PAGE_VIEWS":
+        case "AD_REQUESTS":
+        case "CLICKS":
+          int sum = 0;
+          for (int j = 0; j < processedData.size(); j++) {
+            String v = processedData.get(j).get(i);
+            if (v.isEmpty()) v = "0";
+            sum += Integer.valueOf(v);
+          }
+          total.add(String.valueOf(sum));
+          break;
+        /*case "AD_REQUESTS_COVERAGE":*/
+        /*case "AD_REQUESTS_CTR":case:*/
+        case "EARNINGS":
+          double dSum = 0;
+          for (int j = 0; j < processedData.size(); j++) {
+            String v = processedData.get(j).get(i);
+            if (v.isEmpty()) v = "0";
+            dSum += Double.valueOf(v);
+          }
+          total.add(df.format(dSum));
+          break;
+        case "COST_PER_CLICK":
+        case "PAGE_VIEWS_RPM":
+          double avg = 0;
+          for (int j = 0; j < processedData.size(); j++) {
+            String v = processedData.get(j).get(i);
+            if (v.isEmpty()) v = "0";
+            avg += Double.valueOf(v);
+          }
+          total.add(df.format(avg/processedData.size()));
+          break;
+      }
+    }
+    processedData.add(total);
     return processedData;
   }
 }

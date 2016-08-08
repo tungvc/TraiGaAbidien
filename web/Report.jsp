@@ -71,7 +71,11 @@
         <canvas id="bar1" fullWidth=true height="50"></canvas>
         <script>
             var barChartData = {
-                labels : [<c:forEach var="p" items="${resp.getData()}" varStatus="loop">"${p.get(0).substring(5, 10)}",</c:forEach>],
+                labels : [<c:forEach var="p" items="${resp.getData()}" varStatus="loop">
+                            <c:if test="${!loop.last}">
+                                "${p.get(0).substring(5, 10)}",
+                            </c:if>
+                          </c:forEach>],
                 datasets : [
                     {
                         label: 'PAGE VIEWS',
