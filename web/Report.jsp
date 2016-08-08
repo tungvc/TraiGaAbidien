@@ -72,7 +72,7 @@
         <script>
             var barChartData = {
                 labels : [<c:forEach var="p" items="${resp.getData()}" varStatus="loop">
-                            <c:if test="${!loop.last}">
+                            <c:if test="${!loop.first}">
                                 "${p.get(0).substring(5, 10)}",
                             </c:if>
                           </c:forEach>],
@@ -105,8 +105,8 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="row" items="${resp.getData()}">
-        <tr class="active">
+    <c:forEach var="row" items="${resp.getData()}" varStatus="loop">
+        <tr class="${loop.first ? "success" : "active"}">
             <c:forEach var="data" items="${row}">
                 <td>${data}</td>
             </c:forEach>

@@ -208,7 +208,7 @@ public class GenerateReport {
           break;
       }
     }
-    processedData.add(total);
+    processedData.add(0, total);
     return processedData;
   }
 }
