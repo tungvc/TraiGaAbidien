@@ -29,7 +29,8 @@ public class AdsenseAccountService extends DatabaseService<String, AdsenseAccoun
 
     @Override
     public void index(AdsenseAccountEntity model) {
-        updateAdsenseData(model);
+        if (model.adClients.isEmpty())
+            updateAdsenseData(model);
         super.index(model);
     }
 
@@ -37,7 +38,6 @@ public class AdsenseAccountService extends DatabaseService<String, AdsenseAccoun
     public int saveOrUpdate(AdsenseAccountEntity model) {
         int id = super.saveOrUpdate(model);
         all.put(model.getId(), model);
-        updateAdsenseData(model);
         return id;
     }
 

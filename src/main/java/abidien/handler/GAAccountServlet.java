@@ -38,19 +38,21 @@ public class GAAccountServlet extends BaseServlet {
         }
         switch (methodName) {
             case "callback": callBack(request, response, user);
-            case "share": shareUser(request, response);
+            case "share": shareUser(request, response, user);
             default: list(request, response, user);
         }
     }
 
-    private void shareUser(HttpServletRequest request, HttpServletResponse response) {
+    private void shareUser(HttpServletRequest request, HttpServletResponse response, UserEntity user) {
         String shareUser = request.getParameter("shareUser");
         String shareAdsense = request.getParameter("adsense");
         UserEntity shareUserEntity = Environment.getUserService().getUserByEmail(shareUser);
         if (shareUserEntity != null) {
             AdsenseAccountEntity acc = Environment.getAdsenseAccountService().load(shareAdsense);
-            acc.getShareUsers().add(shareUserEntity.getId());
-            Environment.getAdsenseAccountService().saveOrUpdate(acc);
+            if (acc.getUserId() == user.getId()) {
+                acc.getShareUsers().add(shareUserEntity.getId());
+                Environment.getAdsenseAccountService().saveOrUpdate(acc);
+            }
         }
     }
 
@@ -64,7 +66,7 @@ public class GAAccountServlet extends BaseServlet {
                     if (adsense != null) {
                         try {
                             for (AdClientsEntity adClient : adsenseAccount.adClients) {
-                                resp.add(new GAAccountResponse(adsenseAccount.getId(), adClient.name, adClient.accountId, adClient.adClientId, adClient.errorList.size()));
+                                resp.add(new GAAccountResponse(adsenseAccount.getId(), adClient.name, adClient.accountId, adClient.adClientId, adClient.errorList.size(), adsenseAccount.getUserId()));
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

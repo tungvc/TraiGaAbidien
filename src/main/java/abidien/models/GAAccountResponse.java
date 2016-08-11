@@ -9,13 +9,15 @@ public class GAAccountResponse {
     String accountId;
     String adClientId;
     int alert;
+    int user;
 
-    public GAAccountResponse(String id, String name, String accountId, String adClientId, int alert) {
+    public GAAccountResponse(String id, String name, String accountId, String adClientId, int alert, int user) {
         this.id = id;
         this.name = name;
         this.accountId = accountId;
         this.adClientId = adClientId;
         this.alert = alert;
+        this.user = user;
     }
 
     public String getId() {
@@ -36,5 +38,9 @@ public class GAAccountResponse {
 
     public int getAlert() {
         return alert;
+    }
+
+    public int getUser() {
+        return user;
     }
 }

@@ -2,10 +2,7 @@ package abidien.models;
 
 import com.google.api.services.adsense.AdSense;
 
-import javax.persistence.Basic;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.*;
 
 /**
@@ -58,7 +55,7 @@ public class AdsenseAccountEntity implements IItem<String> {
         this.disable = disable;
     }
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     public Set<Integer> getShareUsers() {
         return shareUsers;
     }
