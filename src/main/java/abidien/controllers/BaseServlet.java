@@ -1,6 +1,7 @@
 package abidien.controllers;
 
 import abidien.common.Helper;
+import abidien.models.UserEntity;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,5 +35,18 @@ public abstract class BaseServlet extends HttpServlet {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public boolean isAdmin(HttpServletRequest request, HttpServletResponse response) {
+        UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+        if (user == null || !user.getName().equals("admin")) {
+            try {
+                response.sendRedirect("/web/dashboard");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+        return true;
     }
 }

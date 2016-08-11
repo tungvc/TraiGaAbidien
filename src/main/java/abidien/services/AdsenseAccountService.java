@@ -15,23 +15,22 @@ import java.util.List;
 /**
  * Created by ABIDIEN on 02/08/2016.
  */
-public class AdsenseAccountService extends DatabaseService<AdsenseAccountEntity> {
-    public HashMap<String, AdsenseAccountEntity> all;
+public class AdsenseAccountService extends DatabaseService<String, AdsenseAccountEntity> {
 
     public AdsenseAccountService() {
         super(AdsenseAccountEntity.class);
-        all = new HashMap<>();
-
-        for (AdsenseAccountEntity adsenseAccount: loadAll()) {
-            all.put(adsenseAccount.getId(), adsenseAccount);
-            updateAdsenseData(adsenseAccount);
-        }
     }
 
     public AdsenseAccountEntity load(String adsenseId) {
         if (all.containsKey(adsenseId))
             return all.get(adsenseId);
         return null;
+    }
+
+    @Override
+    public void index(AdsenseAccountEntity model) {
+        updateAdsenseData(model);
+        super.index(model);
     }
 
     @Override

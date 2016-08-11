@@ -6,18 +6,31 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<link rel="stylesheet" type="text/css" media="all" href="/resources/css/daterangepicker.css" />
+<link rel="stylesheet" type="text/css" media="all" href="/resources/css/daterangepicker.css"/>
 <script type="text/javascript" src="/resources/js/moment.min.js"></script>
 <script type="text/javascript" src="/resources/js/daterangepicker.js"></script>
 
 <style type="text/css">
-    .demo { position: relative; }
-    .demo i {
-        position: absolute; bottom: 10px; right: 24px; top: auto; cursor: pointer;
+    .demo {
+        position: relative;
     }
-    .btn-bootrap-success { border-color: #4cae4c; border: 1px solid transparent; background-color: #5cb85c; padding: 6px 12px;}
+
+    .demo i {
+        position: absolute;
+        bottom: 10px;
+        right: 24px;
+        top: auto;
+        cursor: pointer;
+    }
+
+    .btn-bootrap-success {
+        border-color: #4cae4c;
+        border: 1px solid transparent;
+        background-color: #5cb85c;
+        padding: 6px 12px;
+    }
 </style>
 <div class="row">
     <div class="col-md-2 demo">
@@ -50,14 +63,14 @@
         "endDate": end,
         "maxDate": end,
         "applyClass": "btn-success btn-bootrap-success"
-    }, function(start, end, label) {
+    }, function (start, end, label) {
         console.log(start.valueOf());
         console.log(end);
         console.log(label);
         console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
     });
 
-    $('#daterange').on('apply.daterangepicker', function(ev, picker) {
+    $('#daterange').on('apply.daterangepicker', function (ev, picker) {
         //do something, like clearing an input
         var startDate = picker.startDate.format('YYYY-MM-DD');
         var endDate = picker.endDate.format('YYYY-MM-DD');
@@ -71,18 +84,18 @@
         <canvas id="bar1" fullWidth=true height="50"></canvas>
         <script>
             var barChartData = {
-                labels : [<c:forEach var="p" items="${resp.getData()}" varStatus="loop">
-                            <c:if test="${!loop.first}">
-                                "${p.get(0).substring(5, 10)}",
-                            </c:if>
-                          </c:forEach>],
-                datasets : [
+                labels: [<c:forEach var="p" items="${resp.getData()}" varStatus="loop">
+                    <c:if test="${!loop.first}">
+                    "${p.get(0).substring(5, 10)}",
+                    </c:if>
+                    </c:forEach>],
+                datasets: [
                     {
                         label: 'PAGE VIEWS',
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1,
-                        data : [${resp.getPointChart()}]
+                        data: [${resp.getPointChart()}]
                     }
                 ]
 
@@ -91,7 +104,7 @@
                 fullWidth: true
             };
             //new Chart(document.getElementById("bar1").getContext("2d")).Bar(barChartData);
-            new Chart(document.getElementById("bar1"),{type: 'bar', data: barChartData, option: option});
+            new Chart(document.getElementById("bar1"), {type: 'bar', data: barChartData, option: option});
         </script>
     </div>
 </div>

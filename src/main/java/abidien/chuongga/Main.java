@@ -1,11 +1,7 @@
 package abidien.chuongga;
 
 import abidien.common.Config;
-import abidien.controllers.UserServlet;
-import abidien.handler.DashboardServlet;
-import abidien.handler.GAAccountServlet;
-import abidien.handler.LoginServlet;
-import abidien.handler.ReportServlet;
+import abidien.handler.*;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -48,11 +44,11 @@ public class Main {
         classlist.addAfter("org.eclipse.jetty.webapp.FragmentConfiguration", "org.eclipse.jetty.plus.webapp.EnvConfiguration", "org.eclipse.jetty.plus.webapp.PlusConfiguration");
         classlist.addBefore("org.eclipse.jetty.webapp.JettyWebXmlConfiguration", "org.eclipse.jetty.annotations.AnnotationConfiguration");
 
-        webapp.addServlet(new ServletHolder(new UserServlet()),"/rest/user/*");
         webapp.addServlet(new ServletHolder(new DashboardServlet()), "/web/dashboard");
         webapp.addServlet(new ServletHolder(new LoginServlet()), "/web/login");
         webapp.addServlet(new ServletHolder(new GAAccountServlet()), "/web/ga_account/*");
         webapp.addServlet(new ServletHolder(new ReportServlet()), "/web/report");
+        webapp.addServlet(new ServletHolder(new UserServelt()), "/web/user/*");
 
         server.setHandler(webapp);
 

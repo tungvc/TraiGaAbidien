@@ -7,19 +7,29 @@ import javax.persistence.*;
  */
 @Entity
 @Table(schema = "chuong_ga", catalog = "")
-public class UserEntity implements IItem {
-    private int id;
+public class UserEntity implements IItem<Integer> {
+    private Integer id;
     private String name;
     private String email;
     private String avatar;
     private String password;
 
+    public UserEntity(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    public UserEntity() {
+    }
+
+
     @Id @GeneratedValue
     @Column(name = "id")
-    public int getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(int id) { this.id = id; }
+    public void setId(Integer id) { this.id = id; }
 
     @Basic
     @Column(name = "name")

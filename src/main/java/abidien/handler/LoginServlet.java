@@ -4,7 +4,6 @@ import abidien.chuongga.Environment;
 import abidien.controllers.BaseServlet;
 import abidien.models.UserEntity;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,14 +23,9 @@ public class LoginServlet extends BaseServlet {
         String username = request.getParameter("userName");
         String password = request.getParameter("password");
         if (username != null && password != null) {
-            List<UserEntity> users = Environment.getUserDataService().loadAll();
-            for (UserEntity u: users) {
-                if (u.getEmail().equals(username)) {
-                    if (u.getPassword().equals(String.valueOf(password.hashCode()))) {
-                        request.getSession().setAttribute("user", u);
-                    }
-                    break;
-                }
+            UserEntity u = Environment.getUserService().getUserByEmail(username);
+            if (u != null && u.getPassword().equals(String.valueOf(password.hashCode()))) {
+                request.getSession().setAttribute("user", u);
             }
             url = "/web/dashboard";
             String redirectUrl = request.getParameter("redirectUrl");

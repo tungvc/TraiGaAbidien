@@ -6,26 +6,26 @@ import javax.persistence.Basic;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by ABIDIEN on 01/08/2016.
  */
 @Entity
-public class AdsenseAccountEntity {
+public class AdsenseAccountEntity implements IItem<String> {
 
     private String id;
     private int userId;
     private boolean disable;
     public AdSense adsense;
     public List<AdClientsEntity> adClients = new ArrayList<>();
+    private Set<Integer> shareUsers;
 
     public AdsenseAccountEntity(String id, int userId) {
         this.id = id;
         this.userId = userId;
         disable = false;
+        shareUsers = new HashSet<>();
     }
 
     public AdsenseAccountEntity() {
@@ -58,4 +58,12 @@ public class AdsenseAccountEntity {
         this.disable = disable;
     }
 
+    @ElementCollection
+    public Set<Integer> getShareUsers() {
+        return shareUsers;
+    }
+
+    public void setShareUsers(Set<Integer> shareUsers) {
+        this.shareUsers = shareUsers;
+    }
 }

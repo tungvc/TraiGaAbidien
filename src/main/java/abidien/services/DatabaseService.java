@@ -1,5 +1,6 @@
 package abidien.services;
 
+import abidien.models.AdsenseAccountEntity;
 import abidien.models.IItem;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -7,20 +8,31 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 /**
  * Created by ABIDIEN on 31/07/2016.
  */
-public class DatabaseService<T> implements IDataService<T> {
+public class DatabaseService<K, T extends IItem<K>> implements IDataService<T> {
     private final Class<T> clazz;
-    public DatabaseService(Class<T> clazz) {
-        this.clazz = clazz;
-    }
+    public HashMap<K, T> all;
 
 //    Class<T> persistentClass = (Class<T>) ((ParameterizedType) getClass()
 //    .getGenericSuperclass()).getActualTypeArguments()[0];
+
+    public DatabaseService(Class<T> clazz) {
+        this.clazz = clazz;
+        all = new HashMap<>();
+        for (T model: loadAll()) {
+            index(model);
+        }
+    }
+
+    public void index(T model) {
+        all.put(model.getId(), model);
+    }
 
     @Override
     public T load(int id) {
@@ -48,6 +60,7 @@ public class DatabaseService<T> implements IDataService<T> {
             transaction = session.beginTransaction();
             session.saveOrUpdate(model);
             transaction.commit();
+            index(model);
         } catch (HibernateException ex) {
             //Log the exception
             transaction.rollback();
