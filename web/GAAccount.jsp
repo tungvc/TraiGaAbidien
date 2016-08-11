@@ -29,7 +29,7 @@
             <td>${acc.getAlert()}</td>
             <td>
                 <a href="/web/report?id=${acc.getId()}&accountId=${acc.getAccountId()}&adClientId=${acc.getAdClientId()}" class="btn btn_5 btn-lg btn-info">View Report</a>
-                <c:if test="${resp.getUser() == user.getId()}">
+                <c:if test="${acc.getUser() == user.getId()}">
                 <button id="create-user" onclick="shareUser('${acc.getId()}')" class="btn btn_5 btn-lg btn-info">Share</button>
                 </c:if>
             </td>
@@ -79,8 +79,7 @@
     </form>
 </div>
 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+<script src="/resources/js/jquery-ui.js"></script>
 <script>
     function shareUser(adsenseId) {
         var dialog = document.getElementById("dialog-form"),
