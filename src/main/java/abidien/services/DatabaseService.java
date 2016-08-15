@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -25,7 +26,7 @@ public class DatabaseService<K, T extends IItem<K>> implements IDataService<T> {
     public DatabaseService(Class<T> clazz) {
         this.clazz = clazz;
         all = new HashMap<>();
-        for (T model: loadAll()) {
+        for (T model: loadAllFromDB()) {
             index(model);
         }
     }
@@ -36,6 +37,10 @@ public class DatabaseService<K, T extends IItem<K>> implements IDataService<T> {
 
     @Override
     public T load(int id) {
+        return all.getOrDefault(id, null);
+    }
+
+    public T loadFromDB(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         T p = (T)session.get(clazz, id);
         session.close();
@@ -44,6 +49,10 @@ public class DatabaseService<K, T extends IItem<K>> implements IDataService<T> {
 
     @Override
     public List<T> loadAll() {
+        return new ArrayList<T>(all.values());
+    }
+
+    public List<T> loadAllFromDB() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         String hql = String.format("from %s", clazz.getName());
         Query query = session.createQuery(hql);
