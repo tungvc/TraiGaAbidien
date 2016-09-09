@@ -89,8 +89,24 @@
 							</resources>              
 						</configuration>            
 					</execution>
+                    <execution>
+                        <id>copy-templates</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/templates/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>/templates/</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
 				</executions>
 			 </plugin>
+
 		</plugins>
     </build>
     <dependencies>
@@ -176,7 +192,11 @@
             <artifactId>archaius-core</artifactId>
             <version>0.1.4</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.spullara.mustache.java</groupId>
+            <artifactId>compiler</artifactId>
+            <version>0.8.14</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.http.version>1.18.0-rc</project.http.version>
