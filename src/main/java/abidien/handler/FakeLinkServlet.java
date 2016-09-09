@@ -31,6 +31,7 @@ public class FakeLinkServlet extends BaseServlet {
             hm.put("redirectUrl", redirectUrl);
             rs = TemplateEngine.renderFakeLink(hm);
         }
+        response.setStatus(503);
         response.setContentType("text/html");
         response.getWriter().write(rs);
     }
