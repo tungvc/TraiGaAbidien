@@ -42,7 +42,9 @@ public class Main {
         webapp.addServlet(new ServletHolder(new GAAccountServlet()), "/web/ga_account/*");
         webapp.addServlet(new ServletHolder(new ReportServlet()), "/web/report");
         webapp.addServlet(new ServletHolder(new UserServelt()), "/web/user/*");
-        webapp.addServlet(new ServletHolder(new FakeLinkServlet()), "/fakelink");
+        FakeLinkServlet flServlet = new FakeLinkServlet();
+        webapp.addServlet(new ServletHolder(flServlet), "/fakelink");
+        webapp.addServlet(new ServletHolder(flServlet), "/genlink");
 
         server.setHandler(webapp);
 

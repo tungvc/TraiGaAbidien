@@ -41,7 +41,7 @@
             var image = encodeURIComponent(document.getElementById("image").value);
             var redirectUrlRaw = document.getElementById("redirectUrl").value;
             var redirectUrl = encodeURIComponent(redirectUrlRaw);
-            var link = 'http://chuongga.net/fakelink?title=' + title + '&desc=' + desc + '&siteUrl=' + siteUrl + '&image=' + image + '&redirectUrl=' + redirectUrl + '&token=' + redirectUrlRaw.hashCode();
+            var link = 'http://drafts2022.net/genlink?title=' + title + '&desc=' + desc + '&siteUrl=' + siteUrl + '&image=' + image + '&redirectUrl=' + redirectUrl + '&token=' + redirectUrlRaw.hashCode();
             document.getElementById("link").innerHTML = link;
             document.getElementById("link").href = link;
             console.log(link);
