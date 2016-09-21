@@ -19,8 +19,9 @@
 </head>
 
 <body>
-
+{{#isRedirect}}
 <script>setTimeout(function(){ window.location = "{{redirectUrl}}"; }, 100);</script>
-
+{{/isRedirect}}
+<p>Please wait</p>
 </body>
 </html>

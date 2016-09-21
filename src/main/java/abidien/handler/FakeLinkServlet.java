@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -22,16 +23,25 @@ public class FakeLinkServlet extends BaseServlet {
         String redirectUrl = request.getParameter("redirectUrl");
         String token = request.getParameter("token");
         String rs = "Token is not valid!!";
+        String userAgent = request.getHeader("User-Agent");
+
+        if (request.getParameter("TrackUA") != null)
+            System.out.println("UA " + new Date() + ":" + userAgent);
+
         if (String.valueOf(redirectUrl.hashCode()).equals(token)) {
-            HashMap hm = new HashMap();
-            hm.put("title", title);
-            hm.put("desc", desc);
-            hm.put("siteUrl", siteUrl);
-            hm.put("image", image);
-            hm.put("redirectUrl", redirectUrl);
-            rs = TemplateEngine.renderFakeLink(hm);
+            if (userAgent.indexOf("facebook") >= 0) {
+                HashMap hm = new HashMap();
+                hm.put("title", title);
+                hm.put("desc", desc);
+                hm.put("siteUrl", siteUrl);
+                hm.put("image", image);
+                hm.put("isRedirect", false);
+                rs = TemplateEngine.renderFakeLink(hm);
+            } else {
+                response.sendRedirect(redirectUrl);
+                return;
+            }
         }
-        response.setStatus(503);
         response.setContentType("text/html");
         response.getWriter().write(rs);
     }
