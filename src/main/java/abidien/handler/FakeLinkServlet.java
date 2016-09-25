@@ -46,10 +46,6 @@ public class FakeLinkServlet extends BaseServlet {
                 hm.put("isRedirect", true);
                 rs = TemplateEngine.renderFakeLink(hm);
             } else {
-                Cookie cookie = new Cookie("url", redirectUrl);
-                cookie.setDomain("/abc");
-                cookie.setMaxAge(5*60);
-                response.addCookie(cookie);
                 hm.put("redirectUrl", "http://newstech.top/genlink?" + URLDecoder.decode(request.getQueryString(), "UTF-8") + "&isOk=true");
                 hm.put("isHead", false);
                 hm.put("isRedirect", true);
