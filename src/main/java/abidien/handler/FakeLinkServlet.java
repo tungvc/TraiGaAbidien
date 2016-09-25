@@ -4,9 +4,11 @@ import abidien.common.TemplateEngine;
 import abidien.controllers.BaseServlet;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -29,17 +31,29 @@ public class FakeLinkServlet extends BaseServlet {
             System.out.println("UA " + new Date() + ":" + userAgent);
 
         if (String.valueOf(redirectUrl.hashCode()).equals(token)) {
+            HashMap hm = new HashMap();
+            hm.put("redirectUrl", redirectUrl);
             if (userAgent.indexOf("facebook") >= 0) {
-                HashMap hm = new HashMap();
+                hm.put("isHead", true);
                 hm.put("title", title);
                 hm.put("desc", desc);
                 hm.put("siteUrl", siteUrl);
                 hm.put("image", image);
                 hm.put("isRedirect", false);
                 rs = TemplateEngine.renderFakeLink(hm);
+            } else if (request.getParameter("isOk") != null) {
+                hm.put("isHead", false);
+                hm.put("isRedirect", true);
+                rs = TemplateEngine.renderFakeLink(hm);
             } else {
-                response.sendRedirect(redirectUrl);
-                return;
+                Cookie cookie = new Cookie("url", redirectUrl);
+                cookie.setDomain("/abc");
+                cookie.setMaxAge(5*60);
+                response.addCookie(cookie);
+                hm.put("redirectUrl", "http://newstech.top/genlink?" + URLDecoder.decode(request.getQueryString(), "UTF-8") + "&isOk=true");
+                hm.put("isHead", false);
+                hm.put("isRedirect", true);
+                rs = TemplateEngine.renderFakeLink(hm);
             }
         }
         response.setContentType("text/html");

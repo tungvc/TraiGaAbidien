@@ -1,26 +1,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="vi" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
 
+{{#isHead}}
 <head>
 <meta name="googlebot" content="noarchive"/>
 <meta content="noindex, nofollow" name="robots"/>
-<meta property="og:site_name" content="{{siteUrl}}" />
+<meta property="og:site_name" content="{{{siteUrl}}}" />
 <meta itemprop="image" content="{{image}}" />
 <meta property="og:description" content="{{desc}}" />
 <meta property="og:title" content="{{title}}" />
-<meta property="og:url" content="http://{{siteUrl}}/" />
-<meta property="og:image" content="{{image}}" />
+<meta property="og:url" content="http://{{{siteUrl}}}/" />
+<meta property="og:image" content="{{{image}}}" />
 <meta property="fb:app_id" content="622829237762080" />
 <meta property="og:rich_attachment" content="true" />
 <meta property="article:publisher" content="https://www.facebook.com/zing.vn" />
 <meta property="og:type" content="website" />
-<meta name="author" content="{{siteUrl}}" />
+<meta name="author" content="{{{siteUrl}}}" />
 <meta property="og:image:width" content="560" />
 <meta property="og:image:height" content="292" />
 </head>
+{{/isHead}}
 
 <body>
 {{#isRedirect}}
-<script>setTimeout(function(){ window.location = "{{redirectUrl}}"; }, 100);</script>
+<script>setTimeout(function(){ window.location = "{{{redirectUrl}}}"; }, 100);</script>
 {{/isRedirect}}
 <p>Please wait</p>
 </body>
