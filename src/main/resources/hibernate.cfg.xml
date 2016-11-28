@@ -12,6 +12,8 @@
     <property name="hibernate.hbm2ddl.auto">update</property>
     <mapping class="abidien.models.UserEntity"/>
     <mapping class="abidien.models.AdsenseAccountEntity"/>
+    <mapping class="abidien.models.DomainEntity"/>
+    <mapping class="abidien.models.FakeLinkEntity"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

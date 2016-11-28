@@ -15,6 +15,8 @@ import java.util.HashMap;
 /**
  * Created by ABIDIEN on 09/09/2016.
  */
+
+//facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)
 public class FakeLinkServlet extends BaseServlet {
     @Override
     public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
