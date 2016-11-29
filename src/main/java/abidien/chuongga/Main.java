@@ -46,6 +46,8 @@ public class Main {
         webapp.addServlet(new ServletHolder(flServlet), "/fakelink");
         webapp.addServlet(new ServletHolder(flServlet), "/genlink");
 
+        webapp.addServlet(new ServletHolder(new RestServlet()), "/smart/*");
+
         server.setHandler(webapp);
 
         server.start();
