@@ -2,6 +2,7 @@ package abidien.chuongga;
 
 import abidien.common.Config;
 import abidien.handler.*;
+import abidien.models.DomainEntity;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -46,7 +47,12 @@ public class Main {
         webapp.addServlet(new ServletHolder(flServlet), "/fakelink");
         webapp.addServlet(new ServletHolder(flServlet), "/genlink");
 
-        webapp.addServlet(new ServletHolder(new RestServlet()), "/smart/*");
+        webapp.addServlet(new ServletHolder(new RestServlet<DomainEntity>(null) {
+            @Override
+            public DomainEntity factory() {
+                return new DomainEntity(null, 0);
+            }
+        }), "/smart/*");
 
         server.setHandler(webapp);
 

@@ -45,7 +45,6 @@ public class DomainEntity {
     }
 
     public DomainEntity(String domain, Integer ownerId) {
-        this.id = id;
         this.domain = domain;
         this.ownerId = ownerId;
     }
