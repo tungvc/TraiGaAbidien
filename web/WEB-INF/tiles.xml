@@ -30,4 +30,19 @@
         <put-attribute name="main-content" value="/ListAccount.jsp"/>
     </definition>
 
+    <!--Auto post-->
+    <definition name="APMainPage" template="/autopost/Templates/MainTemplate.jsp">
+        <put-attribute name="title" value="MainPage" />
+        <put-attribute name="header" value="/autopost/Templates/MainHeader.jsp" />
+        <put-attribute name="left-side" value="/autopost/Templates/MainLeftSide.jsp" />
+    </definition>
+    <definition name="APDashboard" extends="APMainPage">
+        <put-attribute name="title" value="Dashboard" />
+        <put-attribute name="main-content" value="/autopost/Dashboard.jsp"/>
+    </definition>
+    <definition name="APDomain" extends="APMainPage">
+        <put-attribute name="title" value="Domain" />
+        <put-attribute name="main-content" value="/autopost/MangeDomain.jsp"/>
+    </definition>
+
 </tiles-definitions>

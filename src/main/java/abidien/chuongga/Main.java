@@ -2,7 +2,8 @@ package abidien.chuongga;
 
 import abidien.common.Config;
 import abidien.handler.*;
-import abidien.models.DomainEntity;
+import abidien.autopost.models.DomainEntity;
+import abidien.autopost.models.FakeLinkEntity;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
@@ -44,7 +45,6 @@ public class Main {
         webapp.addServlet(new ServletHolder(new ReportServlet()), "/web/report");
         webapp.addServlet(new ServletHolder(new UserServelt()), "/web/user/*");
         FakeLinkServlet flServlet = new FakeLinkServlet();
-        webapp.addServlet(new ServletHolder(flServlet), "/fakelink");
         webapp.addServlet(new ServletHolder(flServlet), "/genlink");
 
         webapp.addServlet(new ServletHolder(new RestServlet<DomainEntity>(null) {
@@ -52,7 +52,14 @@ public class Main {
             public DomainEntity factory() {
                 return new DomainEntity(null, 0);
             }
-        }), "/smart/*");
+        }), "/domain/*");
+
+        webapp.addServlet(new ServletHolder(new RestServlet<FakeLinkEntity>(null) {
+            @Override
+            public FakeLinkEntity factory() {
+                return new FakeLinkEntity(null, 0);
+            }
+        }), "/fakelink/*");
 
         server.setHandler(webapp);
 

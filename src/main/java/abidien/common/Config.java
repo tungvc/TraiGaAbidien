@@ -15,4 +15,9 @@ public class Config {
     public static String dbUrl = factory.getStringProperty("db.url", "jdbc:mysql://localhost:3306/chuong_ga").getValue();
     public static String dbUsername = factory.getStringProperty("db.username", "root").getValue();
     public static String dbPassowrd = factory.getStringProperty("db.password", "").getValue();
+
+
+    //Auto post
+    public static int apPort = factory.getIntProperty("ap.port", 8081).getValue();
 }
+

@@ -2,17 +2,17 @@ package abidien.handler;
 
 import abidien.common.Invoke;
 import abidien.common.JsonExt;
+import abidien.models.IItem;
 import abidien.services.IDataService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 /**
  * Created by ABIDIEN on 29/11/2016.
  */
-public abstract class RestServlet<T> extends SmartServlet {
+public abstract class RestServlet<T extends IItem> extends SmartServlet {
 
     final IDataService<T> service;
 
@@ -38,6 +38,11 @@ public abstract class RestServlet<T> extends SmartServlet {
         T old = service.load(id);
         T instance = readFromRequest(request, old);
         service.saveOrUpdate(instance);
+    }
+
+    @Invoke(params = "id")
+    public void delete(int id) {
+        service.delete(id);
     }
 
     private T readFromRequest(HttpServletRequest request, T instance) {

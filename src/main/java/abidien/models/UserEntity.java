@@ -107,4 +107,11 @@ public class UserEntity implements IItem<Integer> {
     public void setDisable(boolean disable) {
         this.disable = disable;
     }
+
+    @Override
+    public Integer getOwnerId() {
+        return id;
+    }
+
+    public void setOwnerId(Integer ownerId) {}
 }

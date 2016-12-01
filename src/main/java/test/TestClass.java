@@ -1,7 +1,7 @@
 package test;
 
 import abidien.handler.RestServlet;
-import abidien.models.DomainEntity;
+import abidien.autopost.models.DomainEntity;
 import org.junit.Test;
 
 /**

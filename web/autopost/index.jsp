@@ -1,0 +1,1 @@
+<script>window.location = "/web/login";</script>
