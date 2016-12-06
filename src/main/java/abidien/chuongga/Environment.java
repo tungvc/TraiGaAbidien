@@ -18,13 +18,13 @@ public class Environment {
 
     private static UserService userService;
     private static AdsenseAccountService adsenseAccountService;
-    private static InmemoryDataService<String, DomainEntity> domainService;
+    private static InmemoryDataService<Integer, DomainEntity> domainService;
     private static InmemoryDataService<Integer, FakeLinkEntity> fakeLinkService;
 
 
     public static IDataService<DomainEntity> getDomainDataDriver() {
         if (domainDataDriver == null)
-            domainDataDriver = new DatabaseService<String, DomainEntity>(DomainEntity.class);
+            domainDataDriver = new DatabaseService<Integer, DomainEntity>(DomainEntity.class);
         return domainDataDriver;
     }
 
@@ -48,9 +48,9 @@ public class Environment {
         return adsenseAccountService;
     }
 
-    public static InmemoryDataService<String, DomainEntity> getDomainService() {
+    public static InmemoryDataService<Integer, DomainEntity> getDomainService() {
         if (domainService == null)
-            domainService = new InmemoryDataService<String, DomainEntity>(getDomainDataDriver());
+            domainService = new InmemoryDataService<Integer, DomainEntity>(getDomainDataDriver());
         return domainService;
     }
 

@@ -1,5 +1,7 @@
 package abidien.common;
 
+import abidien.models.UserEntity;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +20,13 @@ public class Helper {
         rd.forward(request, response);
     }
 
+    public static void forwardAutoPostPage(HttpServlet httpServlet, HttpServletRequest request, HttpServletResponse response, String pageName) throws ServletException, IOException {
+        String url = "/autopost/Templates/CreateMainPage.jsp";
+        request.setAttribute("pageName", pageName);
+        RequestDispatcher rd = httpServlet.getServletContext().getRequestDispatcher(url);
+        rd.forward(request, response);
+    }
+
     public static String getFullURL(HttpServletRequest request) {
         StringBuffer requestURL = request.getRequestURL();
         String queryString = request.getQueryString();
@@ -27,5 +36,9 @@ public class Helper {
         } else {
             return requestURL.append('?').append(queryString).toString();
         }
+    }
+
+    public static UserEntity getUser(HttpServletRequest request) {
+        return (UserEntity)request.getSession().getAttribute("user");
     }
 }

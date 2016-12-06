@@ -12,5 +12,5 @@ public interface IDataService<T> {
     public T load(int id);
     public List<T> loadAll();
     public int saveOrUpdate(T model);
-    public int delete(int id);
+    public int delete(T id);
 }

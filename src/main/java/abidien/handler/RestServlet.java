@@ -1,8 +1,10 @@
 package abidien.handler;
 
+import abidien.common.Helper;
 import abidien.common.Invoke;
 import abidien.common.JsonExt;
 import abidien.models.IItem;
+import abidien.models.UserEntity;
 import abidien.services.IDataService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +32,7 @@ public abstract class RestServlet<T extends IItem> extends SmartServlet {
     @Invoke(params = "request,response")
     public void save(HttpServletRequest request, HttpServletResponse response) {
         T instance = readFromRequest(request, factory());
+        instance.setOwnerId(Helper.getUser(request).getId());
         service.saveOrUpdate(instance);
     }
 
@@ -40,9 +43,11 @@ public abstract class RestServlet<T extends IItem> extends SmartServlet {
         service.saveOrUpdate(instance);
     }
 
-    @Invoke(params = "id")
-    public void delete(int id) {
-        service.delete(id);
+    @Invoke(params = "request,id")
+    public void delete(HttpServletRequest request, int id) {
+        if (Helper.getUser(request).getId() == service.load(id).getOwnerId()) {
+            service.delete(service.load(id));
+        }
     }
 
     private T readFromRequest(HttpServletRequest request, T instance) {

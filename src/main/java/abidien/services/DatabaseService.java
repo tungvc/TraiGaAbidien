@@ -81,7 +81,20 @@ public class DatabaseService<K, T extends IItem<K>> implements IDataService<T> {
     }
 
     @Override
-    public int delete(int id) {
+    public int delete(T model) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try{
+            transaction = session.beginTransaction();
+            session.delete(model);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            //Log the exception
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
         return 0;
     }
 }

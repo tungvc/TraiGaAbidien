@@ -46,7 +46,9 @@ public class AdsenseAccountEntity implements IItem<String> {
         return userId;
     }
 
-    public void setOwnerId(Integer ownerId) {}
+    public void setOwnerId(Integer ownerId) {
+        userId = ownerId;
+    }
 
     public void setOwnerId(int ownerId) {}
 

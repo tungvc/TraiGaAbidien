@@ -11,8 +11,19 @@ import javax.persistence.Id;
  * Created by ABIDIEN on 28/11/2016.
  */
 @Entity
-public class DomainEntity implements IItem<String> {
+public class DomainEntity implements IItem<Integer> {
+    private Integer id;
+
+    @GeneratedValue
     @Id
+    public Integer getId() {
+        return id;
+    }
+
+    private void setId(Integer id) {
+        this.id = id;
+    }
+
     private String domain;
 
     @Basic
@@ -42,9 +53,5 @@ public class DomainEntity implements IItem<String> {
 
     public DomainEntity() { }
 
-    @Override
-    public String getId() {
-        return domain;
-    }
 
 }

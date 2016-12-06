@@ -75,7 +75,7 @@
             <div class="row">
 
                 <div class="col-md-6">
-                    <div class="panel">
+
                         <tiles:insertAttribute name="main-content"/>
                     </div><!-- panel -->
 
