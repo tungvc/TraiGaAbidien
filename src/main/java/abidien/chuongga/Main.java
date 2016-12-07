@@ -57,7 +57,7 @@ public class Main {
         webapp.addServlet(new ServletHolder(new RestServlet<FakeLinkEntity>(null) {
             @Override
             public FakeLinkEntity factory() {
-                return new FakeLinkEntity(null, 0);
+                return new FakeLinkEntity(null, null, null, null, 0);
             }
         }), "/fakelink/*");
 

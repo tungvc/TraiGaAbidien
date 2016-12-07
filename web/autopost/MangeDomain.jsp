@@ -88,9 +88,3 @@
     </div>
 </div>
 
-
-</div><!-- col-md-6 -->
-
-</div><!--row -->
-</div><!-- panel-body -->
-</div><!-- panel -->

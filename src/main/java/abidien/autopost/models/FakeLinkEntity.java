@@ -13,6 +13,11 @@ import javax.persistence.Id;
 @Entity
 public class FakeLinkEntity implements IItem<Integer> {
     private Integer id;
+    private String targetUrl;
+    private Integer ownerId;
+    private String title;
+    private String description;
+    private String imageUrl;
 
     @GeneratedValue
     @Id
@@ -24,8 +29,6 @@ public class FakeLinkEntity implements IItem<Integer> {
         this.id = id;
     }
 
-    private String targetUrl;
-
     @Basic
     public String getTargetUrl() {
         return targetUrl;
@@ -34,8 +37,6 @@ public class FakeLinkEntity implements IItem<Integer> {
     public void setTargetUrl(String targetUrl) {
         this.targetUrl = targetUrl;
     }
-
-    private Integer ownerId;
 
     @Basic
     public Integer getOwnerId() {
@@ -46,11 +47,40 @@ public class FakeLinkEntity implements IItem<Integer> {
         this.ownerId = ownerId;
     }
 
-    public FakeLinkEntity(String targetUrl, Integer ownerId) {
-        this.id = id;
+    public FakeLinkEntity(String targetUrl, String title, String description, String imageUrl, Integer ownerId) {
         this.targetUrl = targetUrl;
         this.ownerId = ownerId;
+        this.title = title;
+        this.description = description;
+        this.imageUrl = imageUrl;
     }
 
     public FakeLinkEntity() { }
+
+    @Basic
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Basic
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Basic
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }
