@@ -5,10 +5,7 @@ import abidien.common.HttpUtils;
 import abidien.common.SecurityUtils;
 import abidien.models.IItem;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.File;
 
 /**
@@ -62,6 +59,7 @@ public class FakeLinkEntity implements IItem<Integer> {
     public FakeLinkEntity() { }
 
     @Basic
+    @Column(columnDefinition = "TEXT")
     public String getTitle() {
         return title;
     }
@@ -71,6 +69,7 @@ public class FakeLinkEntity implements IItem<Integer> {
     }
 
     @Basic
+    @Column(columnDefinition = "TEXT")
     public String getDescription() {
         return description;
     }
