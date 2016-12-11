@@ -62,15 +62,15 @@
     <!-- ################# MAIN MENU ################### -->
 
     <div class="tab-pane active" id="mainmenu">
-        <h5 class="sidebar-title">Favorites</h5>
+        <%--<h5 class="sidebar-title">Favorites</h5>
         <ul class="nav nav-pills nav-stacked nav-quirk">
             <li class="active"><a href="index.html"><i class="fa fa-home"></i> <span>Hướng Dẫn</span></a></li>
 
-        </ul>
+        </ul>--%>
 
         <h5 class="sidebar-title">Main Menu</h5>
         <ul class="nav nav-pills nav-stacked nav-quirk">
-            <li class="nav-parent active">
+            <%--<li class="nav-parent active">
                 <a href=""><i class="fa fa-check-square"></i> <span>Spam Groups</span></a>
                 <ul class="children">
                     <li class="active"><a href="get.html">Lấy Token</a></li>
@@ -78,16 +78,16 @@
                     <li><a href="control.html">Quản lý bài viết</a></li>
                     <li><a href="setting.html">Cài Đặt Spam</a></li>
                 </ul>
-            </li>
-            <li class="nav-parent">
+            </li>--%>
+            <li class="nav-parent active">
                 <a href=""><i class="fa fa-check-square"></i> <span>Fake Link</span></a>
                 <ul class="children">
-                    <li><a href="domain">Domain Trung Gian</a></li>
-                    <li><a href="dashboard">Cài đặt</a></li>
-                    <li><a href="analytics.html">Thống kê</a></li>
+                    <li class='${pageName == 'APDomain' ? 'active' : ''}'><a href="domain">Domain Trung Gian</a></li>
+                    <li class='${pageName == 'APDashboard' ? 'active' : ''}'><a href="dashboard">Cài đặt</a></li>
+                    <%--<li><a href="analytics.html">Thống kê</a></li>--%>
                 </ul>
             </li>
-            <li class="nav-parent"><a href=""><i class="fa fa-suitcase"></i> <span>Tools Khác</span></a>
+            <%--<li class="nav-parent"><a href=""><i class="fa fa-suitcase"></i> <span>Tools Khác</span></a>
                 <ul class="children">
                     <li><a href="buttons.html">Buttons</a></li>
                     <li><a href="icons.html">Icons</a></li>
@@ -99,7 +99,7 @@
                     <li><a href="panels.html">Panels</a></li>
                     <li><a href="extras.html">Extras</a></li>
                 </ul>
-            </li>
+            </li>--%>
 
         </ul>
     </div><!-- tab-pane -->

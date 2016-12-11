@@ -1,11 +1,15 @@
 package abidien.autopost.models;
 
+import abidien.common.Config;
+import abidien.common.HttpUtils;
+import abidien.common.SecurityUtils;
 import abidien.models.IItem;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.File;
 
 /**
  * Created by ABIDIEN on 28/11/2016.
@@ -82,5 +86,12 @@ public class FakeLinkEntity implements IItem<Integer> {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getLocalImage(String domain) {
+        File file = HttpUtils.urlToLocalFile(imageUrl, Config.uploadDir + "/img/" + "link_" + SecurityUtils.encode(id) + ".jpg");
+        if (file != null)
+            return domain + "/img/" + file.getName();
+        return "";
     }
 }

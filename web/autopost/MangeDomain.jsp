@@ -18,7 +18,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Domain <span class="text-danger">*</span></label>
                 <div class="col-sm-8">
-                    <input type="text" name="domain" class="form-control" placeholder="Nhập domain trung gian..."
+                    <input type="text" name="domain" class="form-control" placeholder="http://domain.com"
                            required/>
                 </div>
 

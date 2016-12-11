@@ -51,7 +51,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Link ảnh<span class="text-danger">*</span></label>
                 <div class="col-sm-8">
-                    <input type="text" name="imageUrl" class="form-control" placeholder="link dạng i.imgur.com ..." required />
+                    <input type="text" name="imageUrl" class="form-control" placeholder="" required />
                 </div>
             </div>
 
@@ -91,15 +91,15 @@
                 </thead>
                 <tbody>
                 <c:forEach var="fakeLink" items="${fakeLinkList}">
-                    <tr class="">
-                        <td>${fakeLink.getTargetUrl()}</td>
-                        <td>${fakeLink.getTitle()}</td>
-                        <td>${fakeLink.getDescription()}</td>
-                        <td>${fakeLink.getImageUrl()}</td>
+                    <tr style="cursor: pointer;">
+                        <td onclick="getLink('${fakeLink.getId()}')">${fakeLink.getTargetUrl()}</td>
+                        <td onclick="getLink('${fakeLink.getId()}')">${fakeLink.getTitle()}</td>
+                        <td onclick="getLink('${fakeLink.getId()}')">${fakeLink.getDescription()}</td>
+                        <td onclick="getLink('${fakeLink.getId()}')">${fakeLink.getImageUrl()}</td>
                         <td>
                             <ul class="table-options">
                                     <%--<li><a href=""><i class="fa fa-pencil"></i></a></li>--%>
-                                <li><a href="/web/domain/delete?id=${fakeLink.getId()}"><i class="fa fa-trash"></i></a></li>
+                                <li><a href="/web/dashboard/delete?id=${fakeLink.getId()}"><i class="fa fa-trash"></i></a></li>
                             </ul>
                         </td>
                     </tr>
@@ -110,3 +110,45 @@
         </div><!-- table-responsive -->
     </div>
 </div>
+
+<script src="/resources/js/jquery-ui.js"></script>
+
+<script>
+    function httpGetAsync(url, callback)
+    {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                callback(xmlHttp.responseText);
+                console.log(xmlHttp.responseText);
+            }
+        }
+        xmlHttp.open("GET", url, true); // true for asynchronous
+        xmlHttp.send(null);
+    }
+
+    function getLink(id) {
+        var dialog = document.getElementById("dialog-form"),
+                dimmer = document.createElement("div");
+        dimmer.style.width =  window.innerWidth + 'px';
+        dimmer.style.height = window.innerHeight + 'px';
+        dimmer.className = 'dimmer';
+
+        dimmer.onclick = function(){
+            document.body.removeChild(this);
+            dialog.style.visibility = 'hidden';
+        }
+
+        document.body.appendChild(dimmer);
+
+        dialog.style.visibility = 'visible';
+        dialog.style.top = window.innerHeight/2 - 400/2 + 'px';
+        dialog.style.left = window.innerWidth/2 - 800/2 + 'px';
+
+        document.getElementById("listLink").value = "";
+        httpGetAsync("/web/dashboard/genLink?id=" + id, function (data) {
+            var array = JSON.parse(data).toString().split(',').join("\n")
+            document.getElementById("listLink").value = array;
+        });
+    }
+</script>

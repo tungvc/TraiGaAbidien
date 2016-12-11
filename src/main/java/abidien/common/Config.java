@@ -2,6 +2,8 @@ package abidien.common;
 
 import com.netflix.config.DynamicPropertyFactory;
 
+import java.io.File;
+
 /**
  * Created by ABIDIEN on 31/07/2016.
  */
@@ -19,5 +21,7 @@ public class Config {
 
     //Auto post
     public static int apPort = factory.getIntProperty("ap.port", 8081).getValue();
+    public static String uploadDir = factory.getStringProperty("upload.dir", "D:/upload_dir").getValue();
+
 }
 

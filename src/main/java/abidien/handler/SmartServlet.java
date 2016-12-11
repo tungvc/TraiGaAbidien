@@ -1,5 +1,6 @@
 package abidien.handler;
 
+import abidien.common.Helper;
 import abidien.common.Invoke;
 import abidien.controllers.BaseServlet;
 
@@ -28,12 +29,25 @@ public class SmartServlet extends BaseServlet {
         }
     }
 
+    Boolean validateUser(HttpServletRequest request) {
+        if (Helper.getUser(request) == null)
+            return false;
+        return true;
+    }
+
     @Override
     public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String[] uri = request.getRequestURI().split("/");
         String methodName = uri[uri.length - 1];
         Method m = methods.get(methodName);
-        String[] params = m.getAnnotation(Invoke.class).params().split(",");
+        Invoke annotation = m.getAnnotation(Invoke.class);
+        String[] params = annotation.params().split(",");
+
+        if (annotation.authen() && !validateUser(request)) {
+            response.sendRedirect("/web/login");
+            return;
+        }
+
         Object[] args = new Object[params.length];
         Class[] paramsType = m.getParameterTypes();
         for (int i = 0; i < params.length; i++) {

@@ -37,12 +37,10 @@ public class DomainServlet extends RestServlet<DomainEntity> {
 
     @Invoke(params = "request,response")
     public void domain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getSession().getAttribute("user") != null) {
-            List<DomainEntity> data = Environment.getDomainService().loadAll();
-            request.setAttribute("domainList", data);
-            Helper.forwardAutoPostPage(this, request, response, "APDomain");
-        } else
-            response.sendRedirect("/web/login");
+        List<DomainEntity> data = Environment.getDomainService().loadAll();
+        data.sort((x1, x2) -> x2.getId()- x1.getId());
+        request.setAttribute("domainList", data);
+        Helper.forwardAutoPostPage(this, request, response, "APDomain");
     }
 
 

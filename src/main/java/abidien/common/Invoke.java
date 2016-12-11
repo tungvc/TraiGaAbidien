@@ -9,4 +9,5 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Invoke {
     public String params();
+    public boolean authen() default true;
 }

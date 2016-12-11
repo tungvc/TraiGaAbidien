@@ -1,29 +1,20 @@
-<html xmlns="http://www.w3.org/1999/xhtml" lang="vi" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-{{#isHead}}
 <head>
-<meta name="googlebot" content="noarchive"/>
-<meta content="noindex, nofollow" name="robots"/>
-<meta property="og:site_name" content="{{{siteUrl}}}" />
-<meta itemprop="image" content="{{image}}" />
-<meta property="og:description" content="{{desc}}" />
-<meta property="og:title" content="{{title}}" />
-<meta property="og:url" content="http://{{{siteUrl}}}/" />
-<meta property="og:image" content="{{{image}}}" />
-<meta property="fb:app_id" content="622829237762080" />
-<meta property="og:rich_attachment" content="true" />
-<meta property="article:publisher" content="https://www.facebook.com/zing.vn" />
-<meta property="og:type" content="website" />
-<meta name="author" content="{{{siteUrl}}}" />
-<meta property="og:image:width" content="560" />
-<meta property="og:image:height" content="292" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <title>{{title}}</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=0.3, maximum-scale=5, initial-scale=1.0, user-scalable=yes" />
+    <meta name="description" content="{{desc}}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{title}}" />
+    <meta property="og:description" content="{{desc}}" />
+    <meta property="og:image" content="{{{image}}}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-{{/isHead}}
 
-<body>
-{{#isRedirect}}
-<script>setTimeout(function(){ window.location = "{{{redirectUrl}}}"; }, 100);</script>
-{{/isRedirect}}
-<p>Please wait</p>
-</body>
+{{{body}}}
+
 </html>

@@ -10,6 +10,7 @@ import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.util.resource.ResourceCollection;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
@@ -31,7 +32,8 @@ public class Main {
 
         WebAppContext webapp = new WebAppContext();
         webapp.setContextPath("/");
-        webapp.setResourceBase("web");
+        ResourceCollection resources = new ResourceCollection(new String[] {"web", Config.uploadDir});
+        webapp.setBaseResource(resources);
         webapp.setParentLoaderPriority(true);
 
         //3. Including the JSTL jars for the webapp.
@@ -49,7 +51,7 @@ public class Main {
 
         webapp.addServlet(new ServletHolder(new DomainServlet()), "/web/domain/*");
 
-        webapp.addServlet(new ServletHolder(new FakeLinkServlet()), "/web/fakelink/*");
+        webapp.addServlet(new ServletHolder(new FakeLinkServlet()), "/html/*");
 
         server.setHandler(webapp);
 

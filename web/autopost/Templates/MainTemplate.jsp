@@ -97,6 +97,31 @@
     </div><!-- contentpanel -->
 
     </div><!-- mainpanel -->
+    <style>
+        #dialog-form{
+            visibility:hidden;
+            position:absolute;
+            border:2px solid #3c3c3c;
+            color:white;
+            z-index:3001;
+            width: 800px;
+            height:400px;
+            padding:20px;
+            background-color: #fff;
+        }
+        .dimmer{
+            background: #000;
+            position: absolute;
+            opacity: .5;
+            top: 0;
+            z-index:3000;
+        }
+    </style>
+
+    <div id="dialog-form" style="visibility: hidden" title="Create new user">
+    <textarea id="listLink" style="color: black; font-size: large; height: 100%; width: 100%;">
+    </textarea>
+    </div>
 
 </section>
 
