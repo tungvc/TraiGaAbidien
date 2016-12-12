@@ -12,15 +12,15 @@ import java.util.*;
 public class AdsenseAccountEntity implements IItem<String> {
 
     private String id;
-    private int userId;
+    private Integer ownerId;
     private boolean disable;
     public AdSense adsense;
     public List<AdClientsEntity> adClients = new ArrayList<>();
     private Set<Integer> shareUsers;
 
-    public AdsenseAccountEntity(String id, int userId) {
+    public AdsenseAccountEntity(String id, int ownerId) {
         this.id = id;
-        this.userId = userId;
+        this.ownerId = ownerId;
         disable = false;
         shareUsers = new HashSet<>();
     }
@@ -38,22 +38,13 @@ public class AdsenseAccountEntity implements IItem<String> {
     }
 
     @Basic
-    public int getUserId() {
-        return userId;
+    public Integer getOwnerId() {
+        return ownerId;
     }
 
-    public Integer getOwnerId() {
-        return userId;
-    }
 
     public void setOwnerId(Integer ownerId) {
-        userId = ownerId;
-    }
-
-    public void setOwnerId(int ownerId) {}
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+        this.ownerId = ownerId;
     }
 
     @Basic

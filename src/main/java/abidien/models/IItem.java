@@ -6,5 +6,5 @@ package abidien.models;
 public interface IItem<T> {
     T getId();
     Integer getOwnerId();
-    void setOwnerId(Integer ownderId);
+    void setOwnerId(Integer ownerId);
 }

@@ -39,7 +39,7 @@ public class ReportServlet extends BaseServlet {
         AdsenseAccountEntity adsenseAccountEntity = Environment.getAdsenseAccountService().load(adsenseId);
         UserEntity user = (UserEntity)request.getSession().getAttribute("user");
         if (adsenseAccountEntity != null && accountId != null && adClientId != null &&
-                (adsenseAccountEntity.getUserId() == user.getId() || adsenseAccountEntity.getShareUsers().contains(user.getId())                )) {
+                (adsenseAccountEntity.getOwnerId() == user.getId() || adsenseAccountEntity.getShareUsers().contains(user.getId())                )) {
             try {
                 ReportResponse resp = GenerateReport.run(adsenseAccountEntity.adsense, accountId, adClientId, startDate, endDate);
                 request.setAttribute("resp", resp);

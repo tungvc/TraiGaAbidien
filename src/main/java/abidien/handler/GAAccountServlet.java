@@ -8,7 +8,6 @@ import abidien.models.AdsenseAccountEntity;
 import abidien.models.GAAccountResponse;
 import abidien.models.UserEntity;
 import abidien.services.adsense.api.AdsenseService;
-import abidien.services.adsense.api.GenerateReport;
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.services.adsense.AdSense;
 
@@ -49,7 +48,7 @@ public class GAAccountServlet extends BaseServlet {
         UserEntity shareUserEntity = Environment.getUserService().getUserByEmail(shareUser);
         if (shareUserEntity != null) {
             AdsenseAccountEntity acc = Environment.getAdsenseAccountService().load(shareAdsense);
-            if (acc.getUserId() == user.getId()) {
+            if (acc.getOwnerId() == user.getId()) {
                 acc.getShareUsers().add(shareUserEntity.getId());
                 Environment.getAdsenseAccountService().saveOrUpdate(acc);
             }
@@ -61,12 +60,12 @@ public class GAAccountServlet extends BaseServlet {
             ArrayList<GAAccountResponse> resp = new ArrayList<>();
             Collection<AdsenseAccountEntity> adsenseAccountList = Environment.getAdsenseAccountService().all.values();
             for (AdsenseAccountEntity adsenseAccount: adsenseAccountList) {
-                if (adsenseAccount.getUserId() == user.getId() || adsenseAccount.getShareUsers().contains(user.getId())) {
+                if (adsenseAccount.getOwnerId() == user.getId() || adsenseAccount.getShareUsers().contains(user.getId())) {
                     AdSense adsense = adsenseAccount.adsense;
                     if (adsense != null) {
                         try {
                             for (AdClientsEntity adClient : adsenseAccount.adClients) {
-                                resp.add(new GAAccountResponse(adsenseAccount.getId(), adClient.name, adClient.accountId, adClient.adClientId, adClient.errorList.size(), adsenseAccount.getUserId()));
+                                resp.add(new GAAccountResponse(adsenseAccount.getId(), adClient.name, adClient.accountId, adClient.adClientId, adClient.errorList.size(), adsenseAccount.getOwnerId()));
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
