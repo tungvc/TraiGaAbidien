@@ -72,7 +72,8 @@ public class DatabaseService<K, T extends IItem<K>> implements IDataService<T> {
             index(model);
         } catch (HibernateException ex) {
             //Log the exception
-            transaction.rollback();
+            if (transaction != null)
+                transaction.rollback();
             System.err.println(ex);
         } finally {
             session.close();
