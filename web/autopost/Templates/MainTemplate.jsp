@@ -102,12 +102,12 @@
             visibility:hidden;
             position:absolute;
             border:2px solid #3c3c3c;
-            color:white;
             z-index:3001;
             width: 800px;
             height:400px;
             padding:20px;
             background-color: #fff;
+            font-size: large;
         }
         .dimmer{
             background: #000;
@@ -118,9 +118,10 @@
         }
     </style>
 
-    <div id="dialog-form" style="visibility: hidden" title="Create new user">
-    <textarea id="listLink" style="color: black; font-size: large; height: 100%; width: 100%;">
-    </textarea>
+    <div id="dialog-form" style="visibility: hidden; display: table;" title="Create new user">
+        <div id="dialog_title" style="display: table-row; height: 0; color: blue;"></div>
+        <textarea id="listLink" style="display: table-row; margin-top: 10px; height: 100%; width: 100%;">
+        </textarea>
     </div>
 
 </section>

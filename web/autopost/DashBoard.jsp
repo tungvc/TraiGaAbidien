@@ -82,6 +82,7 @@
             <table class="table nomargin">
                 <thead>
                 <tr>
+                    <th>Id</th>
                     <th>Link</th>
                     <th>Tiêu đề</th>
                     <th>Mô tả</th>
@@ -92,10 +93,11 @@
                 <tbody>
                 <c:forEach var="fakeLink" items="${fakeLinkList}">
                     <tr style="cursor: pointer;">
-                        <td onclick="getLink('${fakeLink.getId()}')">${fakeLink.getTargetUrl()}</td>
-                        <td onclick="getLink('${fakeLink.getId()}')">${fakeLink.getTitle()}</td>
-                        <td onclick="getLink('${fakeLink.getId()}')">${fakeLink.getDescription()}</td>
-                        <td onclick="getLink('${fakeLink.getId()}')">${fakeLink.getImageUrl()}</td>
+                        <td >${fakeLink.getId()}</td>
+                        <td onclick="getLink('${fakeLink.getId()}', '${fakeLink.getTitle()}')">${fakeLink.getTargetUrl()}</td>
+                        <td onclick="getLink('${fakeLink.getId()}', '${fakeLink.getTitle()}')">${fakeLink.getTitle()}</td>
+                        <td onclick="getLink('${fakeLink.getId()}', '${fakeLink.getTitle()}')">${fakeLink.getDescription()}</td>
+                        <td onclick="getLink('${fakeLink.getId()}', '${fakeLink.getTitle()}')">${fakeLink.getImageUrl()}</td>
                         <td>
                             <ul class="table-options">
                                     <%--<li><a href=""><i class="fa fa-pencil"></i></a></li>--%>
@@ -127,7 +129,7 @@
         xmlHttp.send(null);
     }
 
-    function getLink(id) {
+    function getLink(id, title) {
         var dialog = document.getElementById("dialog-form"),
                 dimmer = document.createElement("div");
         dimmer.style.width =  window.innerWidth + 'px';
@@ -146,6 +148,7 @@
         dialog.style.left = window.innerWidth/2 - 800/2 + 'px';
 
         document.getElementById("listLink").value = "";
+        document.getElementById("dialog_title").innerHTML = title;
         httpGetAsync("/web/dashboard/genLink?id=" + id, function (data) {
             var array = JSON.parse(data).toString().split(',').join("\n")
             document.getElementById("listLink").value = array;
