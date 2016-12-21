@@ -131,7 +131,7 @@
 
     function getLink(id, title) {
         var dialog = document.getElementById("dialog-form"),
-                dimmer = document.createElement("div");
+        dimmer = document.createElement("div");
         dimmer.style.width =  window.innerWidth + 'px';
         dimmer.style.height = window.innerHeight + 'px';
         dimmer.className = 'dimmer';
@@ -147,11 +147,42 @@
         dialog.style.top = window.innerHeight/2 - 400/2 + 'px';
         dialog.style.left = window.innerWidth/2 - 800/2 + 'px';
 
-        document.getElementById("listLink").value = "";
-        document.getElementById("dialog_title").innerHTML = title;
+        while (dialog.firstChild) {
+            dialog.removeChild(dialog.firstChild);
+        }
         httpGetAsync("/web/dashboard/genLink?id=" + id, function (data) {
-            var array = JSON.parse(data).toString().split(',').join("\n")
-            document.getElementById("listLink").value = array;
+            //var array = JSON.parse(data).toString().split(',').join("\n")
+            var array = JSON.parse(data);
+            for (var i = 0; i < array.length; i++) {
+                var textArea = document.createElement("textarea");
+                var btn = document.createElement("button");
+                textArea.value = title + "\n" + array[i];
+                textArea.id = "link" + i;
+                textArea.className  = "listLink";
+                btn.innerHTML = "Copy";
+                btn.className = "btnCopy";
+                btn.onclick = (function() {
+                    var current = i;
+                    return function() {
+                        copy("link" + current);
+                    }
+                })();
+                dialog.appendChild(textArea);
+                dialog.appendChild(btn);
+            }
         });
+    }
+
+    function copy(id) {
+        var copyTextarea = document.getElementById(id);
+        copyTextarea.select();
+
+        try {
+            var successful = document.execCommand('copy');
+            /*var msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Copying text command was ' + msg);*/
+        } catch (err) {
+            console.log('Oops, unable to copy');
+        }
     }
 </script>

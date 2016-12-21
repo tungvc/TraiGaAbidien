@@ -111,17 +111,24 @@
         }
         .dimmer{
             background: #000;
-            position: absolute;
+            position: fixed;
             opacity: .5;
             top: 0;
             z-index:3000;
         }
+        .listLink{
+            width: 80%;
+            font-size: small;
+            float: left;
+        }
+        .btnCopy {
+            width: 18%;
+            height: 2em;
+            float: left;
+        }
     </style>
 
     <div id="dialog-form" style="visibility: hidden; display: table;" title="Create new user">
-        <div id="dialog_title" style="display: table-row; height: 0; color: blue;"></div>
-        <textarea id="listLink" style="display: table-row; margin-top: 10px; height: 100%; width: 100%;">
-        </textarea>
     </div>
 
 </section>
