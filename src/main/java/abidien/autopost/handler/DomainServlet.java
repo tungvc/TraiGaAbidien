@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by ABIDIEN on 02/12/2016.
@@ -37,7 +38,11 @@ public class DomainServlet extends RestServlet<DomainEntity> {
 
     @Invoke(params = "request,response")
     public void domain(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<DomainEntity> data = Environment.getDomainService().loadAll();
+        int userId = Helper.getUser(request).getId();
+        List<DomainEntity> data = Environment.getDomainService().loadAll().stream()
+                .filter(p -> p.getOwnerId() == userId)
+                .collect(Collectors.toList());
+        //List<DomainEntity> data = Environment.getDomainService().loadAll();
         if (data != null)
             data.sort((x1, x2) -> x2.getId()- x1.getId());
         request.setAttribute("domainList", data);
