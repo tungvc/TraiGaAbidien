@@ -47,7 +47,7 @@ public class DashboardServlet extends RestServlet<FakeLinkEntity> {
         List<FakeLinkEntity> data = Environment.getFakeLinkService().loadAll().stream()
                 .filter(p -> p.getOwnerId() == userId)
                 .collect(Collectors.toList());
-        if (data != null)
+        if (data != null && data.size() > 0)
             data.sort((x1, x2) -> x2.getId()- x1.getId());
         request.setAttribute("fakeLinkList", data);
 
