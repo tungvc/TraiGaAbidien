@@ -8,9 +8,10 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by ABIDIEN on 29/11/2016.
@@ -53,5 +54,27 @@ public class TestClass {
         List names = new ArrayList();
         names.forEach(System.out::println);
 
+    }
+
+    @Test
+    public void testLambdaException() {
+        Map<String, String> a = new HashMap();
+        List<String> list = new ArrayList<String>(a.values());
+        Stream<String> stream = list.stream();
+        Stream<String> stringStream = stream.filter(s -> s != null);
+        List<String> collect = stringStream.collect(Collectors.toList());
+        collect.sort((x1, x2) -> x1.length() - x2.length());
+        System.out.println(collect);
+    }
+
+    @Test
+    public void shuffleArray() {
+        List<Integer> solution = new ArrayList<>();
+        for (int i = 1; i <= 6; i++)
+        {
+            solution.add(i);
+        }
+        Collections.shuffle(solution);
+        solution.forEach(System.out::println);
     }
 }

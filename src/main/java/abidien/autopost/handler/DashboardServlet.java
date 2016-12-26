@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collector;
@@ -48,7 +49,7 @@ public class DashboardServlet extends RestServlet<FakeLinkEntity> {
                 .filter(p -> p.getOwnerId() == userId)
                 .collect(Collectors.toList());
         if (data != null && data.size() > 0)
-            data.sort((x1, x2) -> x2.getId()- x1.getId());
+            data.sort((x1, x2) -> (x2.getId() == null ? 0 : x2.getId()) - (x1.getId() == null ? 0 : x1.getId()));
         request.setAttribute("fakeLinkList", data);
 
         Helper.forwardAutoPostPage(this, request, response, "APDashboard");
@@ -60,6 +61,7 @@ public class DashboardServlet extends RestServlet<FakeLinkEntity> {
         List<String> rs = Environment.getDomainService().loadAll().stream()
                 .map(s -> s.getDomain() + "/html/" + RandomStringUtils.randomAlphanumeric(5) + param)
                 .collect(Collectors.toList());
+        Collections.shuffle(rs);
         WebUtils.renderJson(response, JsonExt.toJson(rs));
     }
 }
