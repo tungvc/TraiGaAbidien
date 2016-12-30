@@ -57,8 +57,10 @@ public class DashboardServlet extends RestServlet<FakeLinkEntity> {
 
     @Invoke(params = "request,response,id", authen = false)
     public void genLink(HttpServletRequest request, HttpServletResponse response, int id) {
+        int userId = Helper.getUser(request).getId();
         String param = ".html?id=" + SecurityUtils.encode(id);
         List<String> rs = Environment.getDomainService().loadAll().stream()
+                .filter(p -> p.getOwnerId() == userId)
                 .map(s -> s.getDomain() + "/html/" + RandomStringUtils.randomAlphanumeric(5) + param)
                 .collect(Collectors.toList());
         Collections.shuffle(rs);
