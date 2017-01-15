@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by ABIDIEN on 31/07/2016.
  */
-public class DatabaseService<K, T extends IItem<K>> implements IDataService<T> {
+public class DatabaseService<K, T extends IItem<K>> implements IDataService<K, T> {
     private final Class<T> clazz;
     public HashMap<K, T> all;
 
@@ -36,16 +36,16 @@ public class DatabaseService<K, T extends IItem<K>> implements IDataService<T> {
     }
 
     @Override
-    public T load(int id) {
+    public T load(K id) {
         return all.getOrDefault(id, null);
     }
 
-    public T loadFromDB(int id) {
+    /*public T loadFromDB(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         T p = (T)session.get(clazz, id);
         session.close();
         return p;
-    }
+    }*/
 
     @Override
     public List<T> loadAll() {

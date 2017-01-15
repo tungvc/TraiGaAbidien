@@ -52,6 +52,7 @@ public class FakeLinkServlet extends BaseServlet {
     @Override
     public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String endcodeId = request.getParameter("id");
+        String currentDomain = "";
         if (endcodeId != null) {
             int id = SecurityUtils.decode(endcodeId);
             FakeLinkEntity fakeLinkEntity = Environment.getFakeLinkService().load(id);
@@ -63,7 +64,7 @@ public class FakeLinkServlet extends BaseServlet {
                 System.out.println("UA " + new Date() + ":" + userAgent);
 
             String targetUrl = fakeLinkEntity.getTargetUrl();
-            String currentDomain = request.getHeader("X-Forwarded-Host");
+            currentDomain = request.getHeader("X-Forwarded-Host");
             if (currentDomain == null)
                 currentDomain = ((Request)request).getRootURL().toString();
             else currentDomain = "http://" + currentDomain;
@@ -102,12 +103,17 @@ public class FakeLinkServlet extends BaseServlet {
             cookie.setMaxAge(0);
             response.addCookie(cookie);
             response.sendRedirect(targetUrl);
+
+            currentDomain = request.getHeader("X-Forwarded-Host");
+            if (currentDomain == null)
+                currentDomain = ((Request)request).getRootURL().toString();
+            Environment.getLogService().log(id, Environment.getDomainService().getIdByDomain(currentDomain));
             return;
         }
         response.sendRedirect("https://google.com");
     }
 
-    public String getContent(String url,  String currentDomain) {
+    public String getContent(String url, String currentDomain) {
         if (contentMap.containsKey(url)) {
             return contentMap.get(url);
         }

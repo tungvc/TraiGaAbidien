@@ -17,7 +17,7 @@
     <mapping class="abidien.models.AdsenseAccountEntity"/>
     <mapping class="abidien.autopost.models.DomainEntity"/>
     <mapping class="abidien.autopost.models.FakeLinkEntity"/>
-    <mapping class="abidien.models.ReportEntity"/>
+    <mapping class="abidien.autopost.models.ReportEntity"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

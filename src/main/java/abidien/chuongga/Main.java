@@ -47,14 +47,14 @@ public class Main {
         FakeLinkServlet flServlet = new FakeLinkServlet();
         webapp.addServlet(new ServletHolder(flServlet), "/genlink");
 
-        webapp.addServlet(new ServletHolder(new RestServlet<DomainEntity>(null) {
+        webapp.addServlet(new ServletHolder(new RestServlet<Integer, DomainEntity>(null) {
             @Override
             public DomainEntity factory() {
                 return new DomainEntity(null, 0);
             }
         }), "/domain/*");
 
-        webapp.addServlet(new ServletHolder(new RestServlet<FakeLinkEntity>(null) {
+        webapp.addServlet(new ServletHolder(new RestServlet<Integer, FakeLinkEntity>(null) {
             @Override
             public FakeLinkEntity factory() {
                 return new FakeLinkEntity(null, null, null, null, 0);

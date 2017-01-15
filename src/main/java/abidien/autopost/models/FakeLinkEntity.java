@@ -20,6 +20,15 @@ public class FakeLinkEntity implements IItem<Integer> {
     private String description;
     private String imageUrl;
 
+    public FakeLinkEntity(FakeLinkEntity fakeLinkEntity) {
+        this.id = fakeLinkEntity.id;
+        this.targetUrl = fakeLinkEntity.targetUrl;
+        this.ownerId = fakeLinkEntity.ownerId;
+        this.title = fakeLinkEntity.title;
+        this.description = fakeLinkEntity.description;
+        this.imageUrl = fakeLinkEntity.imageUrl;
+    }
+
     @GeneratedValue
     @Id
     public Integer getId() {

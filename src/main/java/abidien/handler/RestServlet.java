@@ -14,18 +14,18 @@ import java.lang.reflect.Field;
 /**
  * Created by ABIDIEN on 29/11/2016.
  */
-public abstract class RestServlet<T extends IItem> extends SmartServlet {
+public abstract class RestServlet<K, T extends IItem<K>> extends SmartServlet {
 
-    final IDataService<T> service;
+    final IDataService<K, T> service;
 
     public abstract T factory();
 
-    public RestServlet(IDataService<T> service) {
+    public RestServlet(IDataService<K, T> service) {
         this.service = service;
     }
 
     @Invoke(params = "request,response,id")
-    public void load(HttpServletRequest request, HttpServletResponse response, int id) {
+    public void load(HttpServletRequest request, HttpServletResponse response, K id) {
         service.load(id);
     }
 
@@ -37,14 +37,14 @@ public abstract class RestServlet<T extends IItem> extends SmartServlet {
     }
 
     @Invoke(params = "request,response,id")
-    public void update(HttpServletRequest request, HttpServletResponse response, int id) {
+    public void update(HttpServletRequest request, HttpServletResponse response, K id) {
         T old = service.load(id);
         T instance = readFromRequest(request, old);
         service.saveOrUpdate(instance);
     }
 
     @Invoke(params = "request,id")
-    public void delete(HttpServletRequest request, int id) {
+    public void delete(HttpServletRequest request, K id) {
         if (Helper.getUser(request).getId() == service.load(id).getOwnerId()) {
             service.delete(service.load(id));
         }

@@ -9,7 +9,7 @@ import java.util.HashMap;
 /**
  * Created by ABIDIEN on 12/08/2016.
  */
-public class UserService extends DatabaseService<Integer, UserEntity> implements IDataService<UserEntity> {
+public class UserService extends DatabaseService<Integer, UserEntity> implements IDataService<Integer, UserEntity> {
     HashMap<String, UserEntity> mapEmail = new HashMap<>();;
 
     public UserService() {

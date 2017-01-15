@@ -1,6 +1,7 @@
 package abidien.autopost.handler;
 
 import abidien.autopost.models.FakeLinkEntity;
+import abidien.autopost.models.FakeLinkResponse;
 import abidien.chuongga.Environment;
 import abidien.common.*;
 import abidien.controllers.BaseServlet;
@@ -25,7 +26,7 @@ import java.util.stream.Stream;
 /**
  * Created by ABIDIEN on 30/07/2016.
  */
-public class DashboardServlet extends RestServlet<FakeLinkEntity> {
+public class DashboardServlet extends RestServlet<Integer, FakeLinkEntity> {
 
     @Override
     public FakeLinkEntity factory() {
@@ -50,7 +51,8 @@ public class DashboardServlet extends RestServlet<FakeLinkEntity> {
                 .collect(Collectors.toList());
         if (data != null && data.size() > 0)
             data.sort((x1, x2) -> (x2.getId() == null ? 0 : x2.getId()) - (x1.getId() == null ? 0 : x1.getId()));
-        request.setAttribute("fakeLinkList", data);
+        List<FakeLinkResponse> report = Environment.getReportService().getReport(data);
+        request.setAttribute("fakeLinkList", report);
 
         Helper.forwardAutoPostPage(this, request, response, "APDashboard");
     }

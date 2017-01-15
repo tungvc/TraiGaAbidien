@@ -1,5 +1,6 @@
 package abidien.autopost.models;
 
+import abidien.models.AItem;
 import abidien.models.IItem;
 
 import javax.persistence.Basic;
@@ -11,7 +12,7 @@ import javax.persistence.Id;
  * Created by ABIDIEN on 28/11/2016.
  */
 @Entity
-public class DomainEntity implements IItem<Integer> {
+public class DomainEntity extends AItem<Integer> {
     private Integer id;
 
     @GeneratedValue
@@ -52,6 +53,4 @@ public class DomainEntity implements IItem<Integer> {
     }
 
     public DomainEntity() { }
-
-
 }

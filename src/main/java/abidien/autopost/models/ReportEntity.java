@@ -1,19 +1,29 @@
-package abidien.models;
+package abidien.autopost.models;
 
+import abidien.models.IItem;
 import javafx.util.Pair;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * Created by ABIDIEN on 28/12/2016.
  */
 @Entity
-public class ReportEntity implements IItem<Pair<Integer, Integer>> {
+public class ReportEntity implements IItem<Pair<Integer, Integer>>, Serializable {
     private Integer fakeLinkId;
     private Integer domainId;
     private Integer click;
+
+    public ReportEntity(Integer fakeLinkId, Integer domainId, Integer click) {
+        this.fakeLinkId = fakeLinkId;
+        this.domainId = domainId;
+        this.click = click;
+    }
+
+    public ReportEntity() { }
 
     @Override
     public Pair<Integer, Integer> getId() {

@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 /**
  * Created by ABIDIEN on 02/12/2016.
  */
-public class DomainServlet extends RestServlet<DomainEntity> {
+public class DomainServlet extends RestServlet<Integer, DomainEntity> {
 
     @Override
     public DomainEntity factory() {

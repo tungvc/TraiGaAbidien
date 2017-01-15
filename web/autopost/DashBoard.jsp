@@ -87,6 +87,7 @@
                     <th>Tiêu đề</th>
                     <th>Mô tả</th>
                     <th>Link ảnh</th>
+                    <th>Click</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -98,6 +99,7 @@
                         <td onclick="getLink('${fakeLink.getId()}', '${fakeLink.getTitle()}')">${fakeLink.getTitle()}</td>
                         <td onclick="getLink('${fakeLink.getId()}', '${fakeLink.getTitle()}')">${fakeLink.getDescription()}</td>
                         <td onclick="getLink('${fakeLink.getId()}', '${fakeLink.getTitle()}')">${fakeLink.getImageUrl()}</td>
+                        <td onclick="getLink('${fakeLink.getId()}', '${fakeLink.getTitle()}')">${fakeLink.getClick()}</td>
                         <td>
                             <ul class="table-options">
                                     <%--<li><a href=""><i class="fa fa-pencil"></i></a></li>--%>

@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 /**
  * Created by ABIDIEN on 02/12/2016.
  */
-public class InmemoryDataService<K, T extends IItem<K>> implements IDataService<T> {
+public class InmemoryDataService<K, T extends IItem<K>> implements IDataService<K, T> {
     final IDataService db;
 
-    public InmemoryDataService(IDataService<T> db) {
+    public InmemoryDataService(IDataService<K, T> db) {
         this.db = db;
         all = db.loadAll().stream().collect(Collectors.toMap(T::getId, Function.identity()));
     }
@@ -22,7 +22,7 @@ public class InmemoryDataService<K, T extends IItem<K>> implements IDataService<
     private Map<K, T> all;
 
     @Override
-    public T load(int id) {
+    public T load(K id) {
         return all.getOrDefault(id, null);
     }
 
