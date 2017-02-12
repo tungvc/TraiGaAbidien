@@ -48,7 +48,7 @@ public class AdsenseAccountEntity implements IItem<String> {
     }
 
     @Basic
-    public boolean isDisable() {
+    public boolean getDisable() {
         return disable;
     }
 

@@ -103,7 +103,7 @@
                         <td>
                             <ul class="table-options">
                                     <%--<li><a href=""><i class="fa fa-pencil"></i></a></li>--%>
-                                <li><a href="/web/dashboard/delete?id=${fakeLink.getId()}"><i class="fa fa-trash"></i></a></li>
+                                <li><a href="/web/dashboard/disable?id=${fakeLink.getId()}"><i class="fa fa-trash"></i></a></li>
                             </ul>
                         </td>
                     </tr>

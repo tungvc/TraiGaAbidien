@@ -23,10 +23,12 @@ import java.util.Map;
 public class SmartServlet extends BaseServlet {
 
     Map<String, Method> methods = new HashMap<>();
-    public SmartServlet() {
+    private Class modelClass;
+    public SmartServlet(Class modelClass) {
         for (Method method : this.getClass().getMethods()) {
             methods.put(method.getName(), method);
         }
+        this.modelClass = modelClass;
     }
 
     Boolean validateUser(HttpServletRequest request) {
@@ -60,7 +62,14 @@ public class SmartServlet extends BaseServlet {
                     break;
                 default:
                     String v = request.getParameter(params[i]);
-                    args[i] = convertParam(paramsType[i], v);
+                    if (paramsType[i].equals(Object.class)) {
+                        try {
+                            args[i] = convertParam(modelClass.getDeclaredField("id").getType(), v);
+                        } catch (NoSuchFieldException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else args[i] = convertParam(paramsType[i], v);
                     break;
             }
         }

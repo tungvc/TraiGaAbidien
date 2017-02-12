@@ -28,7 +28,7 @@ public class InmemoryDataService<K, T extends IItem<K>> implements IDataService<
 
     @Override
     public List<T> loadAll() {
-        return new ArrayList<T>(all.values());
+        return all.values().stream().filter(v -> !v.getDisable()).collect(Collectors.toList());
     }
 
     @Override
@@ -45,7 +45,24 @@ public class InmemoryDataService<K, T extends IItem<K>> implements IDataService<
         return 0;
     }
 
+    @Override
+    public void disable(K id) {
+        db.disable(id);
+        load(id).setDisable(true);
+    }
+
+    @Override
+    public void enable(K id) {
+        db.enable(id);
+        load(id).setDisable(false);
+    }
+
     public void index(T model) {
         all.put(model.getId(), model);
+    }
+
+    @Override
+    public Class<T> getModelClass() {
+        return db.getModelClass();
     }
 }

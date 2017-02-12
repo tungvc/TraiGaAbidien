@@ -10,6 +10,7 @@ import abidien.services.IDataService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 
 /**
  * Created by ABIDIEN on 29/11/2016.
@@ -20,7 +21,10 @@ public abstract class RestServlet<K, T extends IItem<K>> extends SmartServlet {
 
     public abstract T factory();
 
+    private Class<K> persistentClass;
+
     public RestServlet(IDataService<K, T> service) {
+        super(service.getModelClass());
         this.service = service;
     }
 
@@ -47,6 +51,20 @@ public abstract class RestServlet<K, T extends IItem<K>> extends SmartServlet {
     public void delete(HttpServletRequest request, K id) {
         if (Helper.getUser(request).getId() == service.load(id).getOwnerId()) {
             service.delete(service.load(id));
+        }
+    }
+
+    @Invoke(params = "request,id")
+    public void enable(HttpServletRequest request, K id) {
+        if (Helper.getUser(request).getId() == service.load(id).getOwnerId()) {
+            service.enable(id);
+        }
+    }
+
+    @Invoke(params = "request,id")
+    public void disable(HttpServletRequest request, K id) {
+        if (Helper.getUser(request).getId() == service.load(id).getOwnerId()) {
+            service.disable(id);
         }
     }
 

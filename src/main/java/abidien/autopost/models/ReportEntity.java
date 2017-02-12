@@ -6,6 +6,7 @@ import javafx.util.Pair;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 
 /**
@@ -67,5 +68,16 @@ public class ReportEntity implements IItem<Pair<Integer, Integer>>, Serializable
 
     public void setClick(Integer click) {
         this.click = click;
+    }
+
+    @Override
+    @Transient
+    public boolean getDisable() {
+        return false;
+    }
+
+    @Override
+    public void setDisable(boolean disable) {
+
     }
 }

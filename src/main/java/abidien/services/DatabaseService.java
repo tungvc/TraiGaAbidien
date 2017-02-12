@@ -1,16 +1,13 @@
 package abidien.services;
 
-import abidien.models.AdsenseAccountEntity;
 import abidien.models.IItem;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -97,5 +94,53 @@ public class DatabaseService<K, T extends IItem<K>> implements IDataService<K, T
             session.close();
         }
         return 0;
+    }
+
+    @Override
+    public void disable(K id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try{
+            transaction = session.beginTransaction();
+            String hqlUpdate = "update " + clazz.getName() + " as c set c.disable = true where c.id = :id";
+            int updatedEntities = session.createQuery(hqlUpdate)
+                    .setParameter("id", id)
+                    .executeUpdate();
+            transaction.commit();
+        } catch (HibernateException ex) {
+            //Log the exception
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return;
+    }
+
+    @Override
+    public void enable(K id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try{
+            transaction = session.beginTransaction();
+            String hql = String.format("from %s", clazz.getName());
+            String hqlUpdate = "update " + clazz.getName() + " c set c.disable = false where c.id = :id";
+            int updatedEntities = session.createQuery( hqlUpdate )
+                    .setParameter("id", id)
+                    .executeUpdate();
+            transaction.commit();
+        } catch (HibernateException ex) {
+            //Log the exception
+            transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return;
+    }
+
+    @Override
+    public Class<T> getModelClass() {
+        return clazz;
     }
 }

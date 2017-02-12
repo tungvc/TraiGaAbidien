@@ -76,7 +76,7 @@
                         <td>
                             <ul class="table-options">
                                 <%--<li><a href=""><i class="fa fa-pencil"></i></a></li>--%>
-                                <li><a href="/web/domain/delete?id=${domain.getId()}"><i class="fa fa-trash"></i></a></li>
+                                <li><a href="/web/domain/disable?id=${domain.getId()}"><i class="fa fa-trash"></i></a></li>
                             </ul>
                         </td>
                     </tr>

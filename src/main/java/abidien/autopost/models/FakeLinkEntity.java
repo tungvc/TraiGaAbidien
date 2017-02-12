@@ -102,4 +102,15 @@ public class FakeLinkEntity implements IItem<Integer> {
             return domain + "/img/" + file.getName();
         return "";
     }
+
+    private boolean disable = false;
+
+    @Basic
+    public boolean getDisable() {
+        return disable;
+    }
+
+    public void setDisable(boolean disable) {
+        this.disable = disable;
+    }
 }

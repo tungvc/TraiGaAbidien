@@ -100,7 +100,7 @@ public class UserEntity implements IItem<Integer> {
     private boolean disable;
 
     @Basic
-    public boolean isDisable() {
+    public boolean getDisable() {
         return disable;
     }
 
@@ -114,4 +114,6 @@ public class UserEntity implements IItem<Integer> {
     }
 
     public void setOwnerId(Integer ownerId) {}
+
+
 }

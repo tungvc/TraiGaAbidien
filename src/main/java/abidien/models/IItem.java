@@ -8,6 +8,8 @@ import javax.persistence.Basic;
 public interface IItem<T> {
     T getId();
     Integer getOwnerId();
+    boolean getDisable();
+    void setDisable(boolean disable);
     void setOwnerId(Integer ownerId);
 
 }
