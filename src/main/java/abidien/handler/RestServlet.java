@@ -49,23 +49,23 @@ public abstract class RestServlet<K, T extends IItem<K>> extends SmartServlet {
 
     @Invoke(params = "request,id")
     public void delete(HttpServletRequest request, K id) {
-        if (Helper.getUser(request).getId() == service.load(id).getOwnerId()) {
+        if (Helper.getUser(request).getId().equals(service.load(id).getOwnerId())) {
             service.delete(service.load(id));
         }
     }
 
     @Invoke(params = "request,id")
     public void enable(HttpServletRequest request, K id) {
-        if (Helper.getUser(request).getId() == service.load(id).getOwnerId()) {
+        if (Helper.getUser(request).getId().equals(service.load(id).getOwnerId())) {
             service.enable(id);
         }
     }
 
     @Invoke(params = "request,id")
     public void disable(HttpServletRequest request, K id) {
-        if (Helper.getUser(request).getId() == service.load(id).getOwnerId()) {
+        if (Helper.getUser(request).getId().equals(service.load(id).getOwnerId())) {
             service.disable(id);
-        }
+        } else System.out.println(Helper.getUser(request).getId() + " != " + service.load(id).getOwnerId());
     }
 
     private T readFromRequest(HttpServletRequest request, T instance) {
