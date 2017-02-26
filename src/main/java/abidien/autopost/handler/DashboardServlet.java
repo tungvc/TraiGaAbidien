@@ -47,7 +47,7 @@ public class DashboardServlet extends RestServlet<Integer, FakeLinkEntity> {
     public void dashboard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int userId = Helper.getUser(request).getId();
         List<FakeLinkEntity> data = Environment.getFakeLinkService().loadAll().stream()
-                .filter(p -> p.getOwnerId() == userId)
+                .filter(p -> p.getOwnerId().equals(userId))
                 .collect(Collectors.toList());
         if (data != null && data.size() > 0)
             data.sort((x1, x2) -> (x2.getId() == null ? 0 : x2.getId()) - (x1.getId() == null ? 0 : x1.getId()));
