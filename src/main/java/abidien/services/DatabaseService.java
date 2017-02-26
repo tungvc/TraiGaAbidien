@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,43 +14,23 @@ import java.util.List;
 /**
  * Created by ABIDIEN on 31/07/2016.
  */
-public class DatabaseService<K, T extends IItem<K>> implements IDataService<K, T> {
+public class DatabaseService<K extends Serializable, T extends IItem<K>> implements IDataService<K, T> {
     private final Class<T> clazz;
-    public HashMap<K, T> all;
-
-//    Class<T> persistentClass = (Class<T>) ((ParameterizedType) getClass()
-//    .getGenericSuperclass()).getActualTypeArguments()[0];
 
     public DatabaseService(Class<T> clazz) {
         this.clazz = clazz;
-        all = new HashMap<>();
-        for (T model: loadAllFromDB()) {
-            index(model);
-        }
-    }
-
-    public void index(T model) {
-        all.put(model.getId(), model);
     }
 
     @Override
     public T load(K id) {
-        return all.getOrDefault(id, null);
-    }
-
-    /*public T loadFromDB(int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         T p = (T)session.get(clazz, id);
         session.close();
         return p;
-    }*/
+    }
 
     @Override
     public List<T> loadAll() {
-        return new ArrayList<T>(all.values());
-    }
-
-    public List<T> loadAllFromDB() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         String hql = String.format("from %s", clazz.getName());
         Query query = session.createQuery(hql);
@@ -66,7 +47,6 @@ public class DatabaseService<K, T extends IItem<K>> implements IDataService<K, T
             transaction = session.beginTransaction();
             session.saveOrUpdate(model);
             transaction.commit();
-            index(model);
         } catch (HibernateException ex) {
             //Log the exception
             if (transaction != null)

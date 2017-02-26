@@ -58,7 +58,7 @@ public class GAAccountServlet extends BaseServlet {
     private void list(HttpServletRequest request, HttpServletResponse response, UserEntity user) {
         try {
             ArrayList<GAAccountResponse> resp = new ArrayList<>();
-            Collection<AdsenseAccountEntity> adsenseAccountList = Environment.getAdsenseAccountService().all.values();
+            Collection<AdsenseAccountEntity> adsenseAccountList = Environment.getAdsenseAccountService().loadAll();
             for (AdsenseAccountEntity adsenseAccount: adsenseAccountList) {
                 if (adsenseAccount.getOwnerId() == user.getId() || adsenseAccount.getShareUsers().contains(user.getId())) {
                     AdSense adsense = adsenseAccount.adsense;

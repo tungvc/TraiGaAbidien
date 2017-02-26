@@ -3,62 +3,72 @@ package abidien.autopost.models;
 import abidien.models.IItem;
 import javafx.util.Pair;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by ABIDIEN on 28/12/2016.
  */
 @Entity
-public class ReportEntity implements IItem<Pair<Integer, Integer>>, Serializable {
-    private Integer fakeLinkId;
-    private Integer domainId;
+public class ReportEntity implements IItem<ReportId>, Serializable {
+
+    @EmbeddedId
+    private ReportId id;
+    private Integer ownerId;
     private Integer click;
 
-    public ReportEntity(Integer fakeLinkId, Integer domainId, Integer click) {
-        this.fakeLinkId = fakeLinkId;
+    private static int timeZone = 7;
+
+
+    public ReportEntity(Integer fakeLinkId, Integer domainId, Integer click, Integer time) {
+        /*this.fakeLinkId = fakeLinkId;
         this.domainId = domainId;
+        this.time = time;*/
+        this.id = new ReportId(fakeLinkId, domainId, time);
+        this.click = click;
+    }
+
+    public ReportEntity(Integer fakeLinkId, Integer domainId, Integer click) {
+        /*this.fakeLinkId = fakeLinkId;
+        this.domainId = domainId;
+        this.time = getCurrentDate();
+        this.click = click;*/
+        this(fakeLinkId, domainId, click, getCurrentDate());
+    }
+
+    public ReportEntity(ReportId id, Integer click) {
+        this.id = id;
         this.click = click;
     }
 
     public ReportEntity() { }
 
-    @Override
-    public Pair<Integer, Integer> getId() {
-        return new Pair(fakeLinkId, domainId);
+    public static int getCurrentDate() {
+        return (int) System.currentTimeMillis() / 3600 / 1000 / 24;
     }
 
-    public void setId(Pair<Integer, Integer> id) {}
+    public static Date convertIntToDate(int dateInInt) {
+        return new Date((dateInInt + timeZone) * 3600L * 1000 * 24);
+    }
+
+    public void setId(ReportId id) {
+        this.id = id;
+    }
+
+    @Override
+    public ReportId getId() {
+        return id;
+    }
 
     @Override
     public Integer getOwnerId() {
-        return null;
+        return ownerId;
     }
 
     @Override
     public void setOwnerId(Integer ownerId) {
-
-    }
-
-    @Id
-    public Integer getFakeLinkId() {
-        return fakeLinkId;
-    }
-
-    public void setFakeLinkId(Integer fakeLinkId) {
-        this.fakeLinkId = fakeLinkId;
-    }
-
-    @Id
-    public Integer getDomainId() {
-        return domainId;
-    }
-
-    public void setDomainId(Integer domainId) {
-        this.domainId = domainId;
+        this.ownerId = ownerId;
     }
 
     @Basic
@@ -77,7 +87,19 @@ public class ReportEntity implements IItem<Pair<Integer, Integer>>, Serializable
     }
 
     @Override
-    public void setDisable(boolean disable) {
+    public void setDisable(boolean disable) {}
+
+    @Override
+    public int hashCode() {
+        return (id.getFakeLinkId() * 13) ^ (id.getDomainId() * 23) ^ (id.getTime() * 37);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        ReportEntity y = (ReportEntity) obj;
+        return id.getFakeLinkId().equals(y.id.getFakeLinkId()) && id.getDomainId().equals(y.id.getDomainId()) && id.getTime().equals(y.id.getTime());
 
     }
 }

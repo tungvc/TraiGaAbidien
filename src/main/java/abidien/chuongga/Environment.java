@@ -3,10 +3,12 @@ package abidien.chuongga;
 import abidien.autopost.models.DomainEntity;
 import abidien.autopost.models.FakeLinkEntity;
 import abidien.autopost.models.ReportEntity;
+import abidien.autopost.models.ReportId;
 import abidien.autopost.services.DomainService;
 import abidien.autopost.services.LogService;
 import abidien.autopost.services.ReportService;
 import abidien.controllers.UserService;
+import abidien.models.AdsenseAccountEntity;
 import abidien.models.UserEntity;
 import abidien.services.AdsenseAccountService;
 import abidien.services.DatabaseService;
@@ -32,7 +34,9 @@ public class Environment {
 
     private static IDataService<Integer, DomainEntity> domainDataDriver;
     private static IDataService<Integer, FakeLinkEntity> fakeLinkDataDriver;
-    private static IDataService<Pair<Integer, Integer>, ReportEntity> reportDataDriver;
+    private static IDataService<ReportId, ReportEntity> reportDataDriver;
+    private static IDataService<String, AdsenseAccountEntity> adsenseAccountDriver;
+    private static IDataService<Integer, UserEntity> userDataDriver;
 
     private static UserService userService;
     private static AdsenseAccountService adsenseAccountService;
@@ -42,10 +46,23 @@ public class Environment {
     private static ReportService reportService;
 
 
+    public static IDataService<Integer, UserEntity> getUserDataDriver() {
+        if (userDataDriver == null)
+            userDataDriver = new DatabaseService<Integer, UserEntity>(UserEntity.class);
+        return userDataDriver;
+    }
+
+
     public static IDataService<Integer, DomainEntity> getDomainDataDriver() {
         if (domainDataDriver == null)
             domainDataDriver = new DatabaseService<Integer, DomainEntity>(DomainEntity.class);
         return domainDataDriver;
+    }
+
+    public static IDataService<String, AdsenseAccountEntity> getAdsenseAccountDriver() {
+        if (adsenseAccountDriver == null)
+            adsenseAccountDriver = new DatabaseService<String, AdsenseAccountEntity>(AdsenseAccountEntity.class);
+        return adsenseAccountDriver;
     }
 
     private static IDataService<Integer, FakeLinkEntity> getFakeLinkDataDriver() {
@@ -54,9 +71,9 @@ public class Environment {
         return fakeLinkDataDriver;
     }
 
-    public static IDataService<Pair<Integer, Integer>, ReportEntity> getReportDataDriver() {
+    public static IDataService<ReportId, ReportEntity> getReportDataDriver() {
         if (reportDataDriver == null)
-            reportDataDriver = new DatabaseService<Pair<Integer, Integer>, ReportEntity>(ReportEntity.class);
+            reportDataDriver = new DatabaseService<ReportId, ReportEntity>(ReportEntity.class);
         return reportDataDriver;
     }
 

@@ -1,28 +1,27 @@
 package abidien.controllers;
 
+import abidien.chuongga.Environment;
 import abidien.models.UserEntity;
 import abidien.services.DatabaseService;
 import abidien.services.IDataService;
+import abidien.services.InmemoryDataService;
 
 import java.util.HashMap;
 
 /**
  * Created by ABIDIEN on 12/08/2016.
  */
-public class UserService extends DatabaseService<Integer, UserEntity> implements IDataService<Integer, UserEntity> {
-    HashMap<String, UserEntity> mapEmail = new HashMap<>();;
+public class UserService extends InmemoryDataService<Integer, UserEntity> implements IDataService<Integer, UserEntity> {
+    //HashMap<String, UserEntity> mapEmail = (HashMap<String, UserEntity>) reference;
 
     public UserService() {
-        super(UserEntity.class);
-        for (UserEntity u: all.values()) {
-            mapEmail.put(u.getEmail(), u);
-        }
+        super(Environment.getUserDataDriver(), new HashMap<String, UserEntity>());
     }
 
     @Override
     public void index(UserEntity model) {
-        if (mapEmail != null)
-            mapEmail.put(model.getEmail(), model);
+        if (reference != null)
+            ((HashMap<String, UserEntity>) reference).put(model.getEmail(), model);
         super.index(model);
     }
 
@@ -36,8 +35,8 @@ public class UserService extends DatabaseService<Integer, UserEntity> implements
     }
 
     public UserEntity getUserByEmail(String email) {
-        if (mapEmail.containsKey(email))
-            return mapEmail.get(email);
+        if (((HashMap<String, UserEntity>) reference).containsKey(email))
+            return ((HashMap<String, UserEntity>) reference).get(email);
         return null;
     }
 }

@@ -3,6 +3,7 @@ package abidien.services;
 import abidien.models.IItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -13,10 +14,19 @@ import java.util.stream.Collectors;
  */
 public class InmemoryDataService<K, T extends IItem<K>> implements IDataService<K, T> {
     final IDataService db;
+    public final Object reference;
 
     public InmemoryDataService(IDataService<K, T> db) {
+        this(db, null);
+    }
+
+    public InmemoryDataService(IDataService<K, T> db, Object reference) {
         this.db = db;
-        all = db.loadAll().stream().collect(Collectors.toMap(T::getId, Function.identity()));
+        this.reference = reference;
+        all = new HashMap<K, T>();
+        for (T model: db.loadAll())
+            index(model);
+        //all = db.loadAll().stream().collect(Collectors.toMap(T::getId, Function.identity()));
     }
 
     private Map<K, T> all;

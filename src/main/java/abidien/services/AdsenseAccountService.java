@@ -1,5 +1,6 @@
 package abidien.services;
 
+import abidien.chuongga.Environment;
 import abidien.models.AdClientsEntity;
 import abidien.models.AdsenseAccountEntity;
 import abidien.services.adsense.api.AdsenseService;
@@ -15,29 +16,27 @@ import java.util.List;
 /**
  * Created by ABIDIEN on 02/08/2016.
  */
-public class AdsenseAccountService extends DatabaseService<String, AdsenseAccountEntity> {
+public class AdsenseAccountService extends InmemoryDataService<String, AdsenseAccountEntity> {
 
     public AdsenseAccountService() {
-        super(AdsenseAccountEntity.class);
+        super(Environment.getAdsenseAccountDriver());
+        for (AdsenseAccountEntity model: loadAll()) {
+            if (model.adClients.isEmpty())
+                updateAdsenseData(model);
+        }
     }
 
-    public AdsenseAccountEntity load(String adsenseId) {
+    /*public AdsenseAccountEntity load(String adsenseId) {
         if (all.containsKey(adsenseId))
             return all.get(adsenseId);
         return null;
-    }
-
-    @Override
-    public void index(AdsenseAccountEntity model) {
-        if (model.adClients.isEmpty())
-            updateAdsenseData(model);
-        super.index(model);
-    }
+    }*/
 
     @Override
     public int saveOrUpdate(AdsenseAccountEntity model) {
         int id = super.saveOrUpdate(model);
-        all.put(model.getId(), model);
+        if (model.adClients.isEmpty())
+            updateAdsenseData(model);
         return id;
     }
 
