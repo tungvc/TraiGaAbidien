@@ -104,10 +104,10 @@ public class FakeLinkServlet extends BaseServlet {
             response.addCookie(cookie);
             response.sendRedirect(targetUrl);
 
-            currentDomain = request.getHeader("X-Forwarded-Host");
+            /*currentDomain = request.getHeader("X-Forwarded-Host");
             if (currentDomain == null)
-                currentDomain = ((Request)request).getRootURL().toString();
-            Environment.getLogService().log(id, Environment.getDomainService().getIdByDomain(currentDomain));
+                currentDomain = ((Request)request).getRootURL().toString();*/
+            Environment.getLogService().log(id, 0/*Environment.getDomainService().getIdByDomain(currentDomain)*/);
             return;
         }
         response.sendRedirect("https://google.com");

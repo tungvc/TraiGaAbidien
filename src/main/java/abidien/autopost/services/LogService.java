@@ -50,10 +50,10 @@ public class LogService implements ILog {
 
     private void flush(ArrayList<ReportId> list) {
         HashMap<ReportId, Integer> map = new HashMap<>();
-
         for (ReportId record: list) {
-            map.put(record, map.getOrDefault(record, 0));
+            map.put(record, map.getOrDefault(record, 0) + 1);
         }
+        System.out.println(list.size() + " - " + map.get(list.get(0)));
         for (Map.Entry<ReportId, Integer> entry: map.entrySet()) {
             Environment.getReportService().updateReport(new ReportEntity(entry.getKey(), entry.getValue()));
         }

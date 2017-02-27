@@ -2,6 +2,7 @@ package abidien.autopost.models;
 
 import abidien.models.IItem;
 import javafx.util.Pair;
+import org.hibernate.annotations.SQLInsert;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -45,7 +46,7 @@ public class ReportEntity implements IItem<ReportId>, Serializable {
     public ReportEntity() { }
 
     public static int getCurrentDate() {
-        return (int) System.currentTimeMillis() / 3600 / 1000 / 24;
+        return (int) (System.currentTimeMillis() / 3600 / 1000 / 24);
     }
 
     public static Date convertIntToDate(int dateInInt) {
