@@ -49,7 +49,7 @@ public class ReportEntity implements IItem<ReportId>, Serializable {
     }
     static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     public static String parseIntToDate(int time) {
-        return sdf.format(new Date((time + timeZone) * 3600L * 1000L * 24L));
+        return sdf.format(new Date(time * 3600L * 1000L * 24L));
     }
 
     public static Date convertIntToDate(int dateInInt) {

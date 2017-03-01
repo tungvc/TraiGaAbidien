@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -80,12 +81,22 @@ public class ReportService /*extends InmemoryDataService<Pair<Integer, Integer>,
         }).collect(Collectors.toList());*/
     }
 
+    double getRate(int click) {
+        if (click < 10000)
+            return 1.5;
+        if (click < 20000)
+            return 2.5;
+        if (click < 50000)
+            return 3;
+        return 4;
+    }
+
     public List<Object[]> getReportByUser(int userId) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         String hql = String.format("select timeInInt, sum(click) from %s where ownerId = %s group by timeInInt ORDER BY timeInInt DESC", db.getModelClass().getSimpleName(), userId);
         Query query = session.createNativeQuery(hql);
         List<Object[]> ds = query.list();
-        List<Object[]> collect = ds.stream().map(m -> new Object[]{ReportEntity.parseIntToDate((int)m[0]), m[1]}).collect(Collectors.toList());
+        List<Object[]> collect = ds.stream().map(m -> new Object[]{ReportEntity.parseIntToDate((int)m[0]), m[1], getRate(((BigDecimal)m[1]).intValue())}).collect(Collectors.toList());
         session.close();
         return collect;
     }

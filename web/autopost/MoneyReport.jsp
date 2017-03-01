@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%--<div class="panel">
     <div class="panel-heading nopaddingbottom">
         <h4 class="panel-title">Cài domain trung gian</h4>
@@ -46,7 +47,8 @@
                         Ngày
                     </th>
                     <th>Lượt click</th>
-                    <th><%--Tổng tiền--%></th>
+                    <th>Rate</th>
+                    <th>Tổng tiền</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -54,7 +56,8 @@
                     <tr class="">
                         <td class="text-center">${record[0]}</td>
                         <td>${record[1]}</td>
-                        <td></td>
+                        <td>${record[2]}</td>
+                        <td><fmt:formatNumber type="number" value="${record[1] * record[2]}" /></td>
                     </tr>
                 </c:forEach>
                 </tbody>
