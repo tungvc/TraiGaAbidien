@@ -1,6 +1,5 @@
 package abidien.autopost.models;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Id;
 import java.io.Serializable;
@@ -12,18 +11,18 @@ import java.io.Serializable;
 public class ReportId implements Serializable {
     private Integer fakeLinkId;
     private Integer domainId;
-    private Integer time;
+    private Integer timeInInt;
 
-    public ReportId(Integer fakeLinkId, Integer domainId, Integer time) {
+    public ReportId(Integer fakeLinkId, Integer domainId, Integer timeInInt) {
         this.fakeLinkId = fakeLinkId;
         this.domainId = domainId;
-        this.time = time;
+        this.timeInInt = timeInInt;
     }
 
     public ReportId(Integer fakeLinkId, Integer domainId) {
         this.fakeLinkId = fakeLinkId;
         this.domainId = domainId;
-        this.time = ReportEntity.getCurrentDate();
+        this.timeInInt = ReportEntity.getCurrentDate();
     }
 
     public ReportId() {
@@ -48,12 +47,12 @@ public class ReportId implements Serializable {
     }
 
     @Id
-    public Integer getTime() {
-        return time;
+    public Integer getTimeInInt() {
+        return timeInInt;
     }
 
-    public void setTime(Integer time) {
-        this.time = time;
+    public void setTimeInInt(Integer timeInInt) {
+        this.timeInInt = timeInInt;
     }
 
     @Override
@@ -64,12 +63,12 @@ public class ReportId implements Serializable {
 
         if (!fakeLinkId.equals(reportId.fakeLinkId)) return false;
         if (!domainId.equals(reportId.domainId)) return false;
-        return time.equals(reportId.time);
+        return timeInInt.equals(reportId.timeInInt);
 
     }
 
     @Override
     public int hashCode() {
-        return (fakeLinkId * 13) ^ (domainId * 23) ^ (time * 37);
+        return (fakeLinkId * 13) ^ (domainId * 23) ^ (timeInInt * 37);
     }
 }

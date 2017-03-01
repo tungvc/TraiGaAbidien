@@ -7,16 +7,12 @@ import abidien.autopost.models.ReportId;
 import abidien.chuongga.Environment;
 import abidien.services.HibernateUtil;
 import abidien.services.IDataService;
-import abidien.services.InmemoryDataService;
-import javafx.util.Pair;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,11 +35,11 @@ public class ReportService /*extends InmemoryDataService<Pair<Integer, Integer>,
         Transaction transaction = null;
         try{
             transaction = session.beginTransaction();
-            String hqlUpdate = "INSERT INTO " + db.getModelClass().getSimpleName() + " (fakeLinkId, domainId, time, ownerId, click) VALUES (:fakeLinkId, :domainId, :time, :ownerId, :click) ON DUPLICATE KEY UPDATE click = click + :click";
+            String hqlUpdate = "INSERT INTO " + db.getModelClass().getSimpleName() + " (fakeLinkId, domainId, timeInInt, ownerId, click) VALUES (:fakeLinkId, :domainId, :timeInInt, :ownerId, :click) ON DUPLICATE KEY UPDATE click = click + :click";
             int updatedEntities = session.createNativeQuery(hqlUpdate)
                     .setParameter("fakeLinkId", report.getId().getFakeLinkId())
                     .setParameter("domainId", report.getId().getDomainId())
-                    .setParameter("time", report.getId().getTime())
+                    .setParameter("timeInInt", report.getId().getTimeInInt())
                     .setParameter("ownerId", Environment.getFakeLinkService().load(report.getId().getFakeLinkId()).getOwnerId())
                     .setParameter("click", report.getClick())
                     .executeUpdate();
@@ -82,5 +78,15 @@ public class ReportService /*extends InmemoryDataService<Pair<Integer, Integer>,
             int click = loadAll().stream().filter(r -> r.getFakeLinkId().equals(f.getId())).mapToInt(o -> o.getClick()).sum();
             return new FakeLinkResponse(f, click);
         }).collect(Collectors.toList());*/
+    }
+
+    public List<Object[]> getReportByUser(int userId) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String hql = String.format("select timeInInt, sum(click) from %s where ownerId = %s group by timeInInt ORDER BY timeInInt DESC", db.getModelClass().getSimpleName(), userId);
+        Query query = session.createNativeQuery(hql);
+        List<Object[]> ds = query.list();
+        List<Object[]> collect = ds.stream().map(m -> new Object[]{ReportEntity.parseIntToDate((int)m[0]), m[1]}).collect(Collectors.toList());
+        session.close();
+        return collect;
     }
 }

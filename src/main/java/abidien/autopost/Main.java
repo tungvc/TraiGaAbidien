@@ -50,6 +50,7 @@ public class Main {
         webapp.addServlet(new ServletHolder(new DashboardServlet()), "/web/dashboard/*");
 
         webapp.addServlet(new ServletHolder(new DomainServlet()), "/web/domain/*");
+        webapp.addServlet(new ServletHolder(new MoneyReportServlet()), "/web/money_report/*");
 
         webapp.addServlet(new ServletHolder(new FakeLinkServlet()), "/html/*");
 

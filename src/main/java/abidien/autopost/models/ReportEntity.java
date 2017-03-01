@@ -1,11 +1,10 @@
 package abidien.autopost.models;
 
 import abidien.models.IItem;
-import javafx.util.Pair;
-import org.hibernate.annotations.SQLInsert;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -22,11 +21,11 @@ public class ReportEntity implements IItem<ReportId>, Serializable {
     private static int timeZone = 7;
 
 
-    public ReportEntity(Integer fakeLinkId, Integer domainId, Integer click, Integer time) {
+    public ReportEntity(Integer fakeLinkId, Integer domainId, Integer click, Integer timeInInt) {
         /*this.fakeLinkId = fakeLinkId;
         this.domainId = domainId;
         this.time = time;*/
-        this.id = new ReportId(fakeLinkId, domainId, time);
+        this.id = new ReportId(fakeLinkId, domainId, timeInInt);
         this.click = click;
     }
 
@@ -47,6 +46,10 @@ public class ReportEntity implements IItem<ReportId>, Serializable {
 
     public static int getCurrentDate() {
         return (int) (System.currentTimeMillis() / 3600 / 1000 / 24);
+    }
+    static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    public static String parseIntToDate(int time) {
+        return sdf.format(new Date((time + timeZone) * 3600L * 1000L * 24L));
     }
 
     public static Date convertIntToDate(int dateInInt) {
@@ -92,7 +95,7 @@ public class ReportEntity implements IItem<ReportId>, Serializable {
 
     @Override
     public int hashCode() {
-        return (id.getFakeLinkId() * 13) ^ (id.getDomainId() * 23) ^ (id.getTime() * 37);
+        return (id.getFakeLinkId() * 13) ^ (id.getDomainId() * 23) ^ (id.getTimeInInt() * 37);
     }
 
     @Override
@@ -100,7 +103,7 @@ public class ReportEntity implements IItem<ReportId>, Serializable {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         ReportEntity y = (ReportEntity) obj;
-        return id.getFakeLinkId().equals(y.id.getFakeLinkId()) && id.getDomainId().equals(y.id.getDomainId()) && id.getTime().equals(y.id.getTime());
+        return id.getFakeLinkId().equals(y.id.getFakeLinkId()) && id.getDomainId().equals(y.id.getDomainId()) && id.getTimeInInt().equals(y.id.getTimeInInt());
 
     }
 }

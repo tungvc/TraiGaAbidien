@@ -53,7 +53,6 @@ public class LogService implements ILog {
         for (ReportId record: list) {
             map.put(record, map.getOrDefault(record, 0) + 1);
         }
-        System.out.println(list.size() + " - " + map.get(list.get(0)));
         for (Map.Entry<ReportId, Integer> entry: map.entrySet()) {
             Environment.getReportService().updateReport(new ReportEntity(entry.getKey(), entry.getValue()));
         }

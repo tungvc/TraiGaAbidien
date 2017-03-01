@@ -44,5 +44,9 @@
         <put-attribute name="title" value="Domain" />
         <put-attribute name="main-content" value="/autopost/MangeDomain.jsp"/>
     </definition>
+    <definition name="APMoneyReport" extends="APMainPage">
+        <put-attribute name="title" value="Money Report" />
+        <put-attribute name="main-content" value="/autopost/MoneyReport.jsp"/>
+    </definition>
 
 </tiles-definitions>
