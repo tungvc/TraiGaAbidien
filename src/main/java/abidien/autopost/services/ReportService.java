@@ -62,6 +62,8 @@ public class ReportService /*extends InmemoryDataService<Pair<Integer, Integer>,
     }
 
     public List<FakeLinkResponse> getReport(List<FakeLinkEntity> list) {
+        if (list == null || list.size() == 0)
+            return null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         String ids = list.stream().map(m -> m.getId().toString()).collect(Collectors.joining(","));
         String hql = String.format("select id, sum(click) from %s where id.fakeLinkId in (%s) group by id.fakeLinkId", db.getModelClass().getName(), ids);
