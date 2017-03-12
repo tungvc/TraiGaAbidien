@@ -32,6 +32,7 @@
                 <c:if test="${acc.getUser() == user.getId()}">
                 <button id="create-user" onclick="shareUser('${acc.getId()}')" class="btn btn_5 btn-lg btn-info">Share</button>
                 </c:if>
+                <a href="/web/payments?id=${acc.getId()}" class="btn btn_5 btn-lg btn-info">Payments</a>
             </td>
         </tr>
     </c:forEach>

@@ -21,6 +21,10 @@
         <put-attribute name="title" value="Report" />
         <put-attribute name="main-content" value="/Report.jsp"/>
     </definition>
+    <definition name="Payments" extends="MainPage">
+        <put-attribute name="title" value="Payments" />
+        <put-attribute name="main-content" value="/Payments.jsp"/>
+    </definition>
     <definition name="CreateAccount" extends="MainPage">
         <put-attribute name="title" value="Create Account" />
         <put-attribute name="main-content" value="/CreateAccount.jsp"/>

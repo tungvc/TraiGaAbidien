@@ -24,7 +24,7 @@ public abstract class RestServlet<K, T extends IItem<K>> extends SmartServlet {
     private Class<K> persistentClass;
 
     public RestServlet(IDataService<K, T> service) {
-        super(service.getModelClass());
+        super((service == null) ? null : service.getModelClass());
         this.service = service;
     }
 
