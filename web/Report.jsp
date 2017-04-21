@@ -61,7 +61,7 @@
         "alwaysShowCalendars": true,
         "startDate": start,
         "endDate": end,
-        "maxDate": end,
+        "maxDate": moment(),
         "applyClass": "btn-success btn-bootrap-success"
     }, function (start, end, label) {
         console.log(start.valueOf());

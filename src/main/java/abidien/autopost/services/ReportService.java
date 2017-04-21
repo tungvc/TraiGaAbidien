@@ -93,9 +93,9 @@ public class ReportService /*extends InmemoryDataService<Pair<Integer, Integer>,
         return 4;
     }
 
-    public List<Object[]> getReportByUser(int userId) {
+    public List<Object[]> getReportByUser(int userId, int from, int to) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        String hql = String.format("select timeInInt, sum(click) from %s where ownerId = %s group by timeInInt ORDER BY timeInInt DESC", db.getModelClass().getSimpleName(), userId);
+        String hql = String.format("select timeInInt, sum(click) from %s where ownerId = %s and %d <= timeInInt and timeInInt <= %d group by timeInInt ORDER BY timeInInt DESC", db.getModelClass().getSimpleName(), userId, from, to);
         Query query = session.createNativeQuery(hql);
         List<Object[]> ds = query.list();
         List<Object[]> collect = ds.stream().map(m -> new Object[]{ReportEntity.parseIntToDate((int)m[0]), m[1], getRate(((BigDecimal)m[1]).intValue())}).collect(Collectors.toList());

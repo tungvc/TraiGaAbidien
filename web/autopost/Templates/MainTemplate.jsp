@@ -17,7 +17,7 @@
     <!--<link rel="shortcut icon" href="../images/favicon.png" type="image/png">-->
 
     <title><tiles:getAsString name="title"/></title>
-
+    <link rel="stylesheet" href="/resources/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="../lib/Hover/hover.css">
     <link rel="stylesheet" href="../lib/fontawesome/css/font-awesome.css">
     <link rel="stylesheet" href="../lib/weather-icons/css/weather-icons.css">
@@ -26,12 +26,12 @@
     <link rel="stylesheet" href="../lib/morrisjs/morris.css">
 
     <link rel="stylesheet" href="../css/quirk.css">
-
+    <script src="/resources/js/jquery-1.10.2.min.js"></script>
     <script src="../lib/modernizr/modernizr.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="../lib/html5shiv/html5shiv.js"></script>
+    <script src="../lib//html5shiv.js"></script>
     <script src="../lib/respond/respond.src.js"></script>
     <![endif]-->
 </head>
@@ -133,7 +133,7 @@
 
 </section>
 
-<script src="../lib/jquery/jquery.js"></script>
+<%--<script src="../lib/jquery/jquery.js"></script>
 <script src="../lib/jquery-ui/jquery-ui.js"></script>
 <script src="../lib/bootstrap/js/bootstrap.js"></script>
 <script src="../lib/jquery-toggles/toggles.js"></script>
@@ -148,7 +148,11 @@
 <script src="../lib/jquery-knob/jquery.knob.js"></script>
 
 <script src="../js/quirk.js"></script>
-<script src="../js/dashboard.js"></script>
+<script src="../js/dashboard.js"></script>--%>
+
+<script src="/resources/js/scripts.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/resources/js/bootstrap.min.js"></script>
 
 </body>
 </html>

@@ -4,6 +4,7 @@ import abidien.models.IItem;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -48,8 +49,18 @@ public class ReportEntity implements IItem<ReportId>, Serializable {
         return (int) (System.currentTimeMillis() / 3600 / 1000 / 24);
     }
     static SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    static SimpleDateFormat sdfYMD = new SimpleDateFormat("yyyy-MM-dd");
     public static String parseIntToDate(int time) {
         return sdf.format(new Date(time * 3600L * 1000L * 24L));
+    }
+
+    public static int parseDateToInt(String date) {
+        try {
+            return (int) ((sdfYMD.parse(date).getTime() + timeZone * 3600 * 1000) / 3600 / 1000 / 24);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return getCurrentDate();
     }
 
     public static Date convertIntToDate(int dateInInt) {
