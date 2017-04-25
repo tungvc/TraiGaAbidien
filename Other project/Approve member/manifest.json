@@ -1,0 +1,17 @@
+{
+  "name": "Approve member",
+  "description": "Approve",
+  "version": "0.1",
+  "permissions": ["contextMenus"],
+  "background": {
+    "scripts": ["script.js"]
+  },
+  "content_scripts": [
+      {
+        "matches": ["*://*.facebook.com/*"],
+        "js": ["content.js"],
+        "run_at": "document_end"
+      }
+  ],
+  "manifest_version": 2
+}
