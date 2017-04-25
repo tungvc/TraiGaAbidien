@@ -9,6 +9,30 @@ function multiClick(inputs, time) {
 	}
 }
 
+function confirmDelete() {
+	var accepts = document.querySelectorAll('div > button:last-child[type=submit]');
+	for (i = 0; i < accepts.length; i++) 
+		accepts[i].click();
+}
+
+var confirmDeleteInterval;
+var delePostInterval;
+function deletePost() {
+	delePostInterval = setInterval(function() {
+		var inputs = document.querySelectorAll('a[data-testid="pending_post_delete_button"]');
+		console.log("Delete " + inputs.length + " posts");
+		for (i = 0; i < inputs.length; i++) 
+			inputs[i].click();
+
+		//while (document.querySelectorAll('a[data-testid="pending_post_delete_button"]').length > 0) {}
+		document.querySelectorAll('a[ajaxify*="/groups/unified_queue/async_response/?queue=pending&groupid="]')[0].click();
+	}, 5000);
+	
+	confirmDeleteInterval = setInterval(confirmDelete, 1000); // assigned to a variable                
+}
+
+var isDeletePost = false
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	if (request == 'approve') {
 		var inputs = document.querySelectorAll('a[name="approve button"]');
@@ -16,19 +40,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		multiClick(inputs, 2);
 		sendResponse(null);
 	} else if (request == 'deletePost') {
-		var inputs = document.querySelectorAll('a[data-tooltip-content="Delete"]');
-		console.log("Delete " + inputs.length + " posts");
-		multiClick(inputs, 2);
-		
-		//for (i = 0; i < inputs.length; i++) { 
-		//	inputs[i].click();
-		//}
-		setTimeout(function(){ 
-			var accepts = document.querySelectorAll('div > button:last-child[type=submit]');
-			multiClick(accepts);
+		if (isDeletePost) {
+			clearInterval(confirmDeleteInterval);
+			clearInterval(delePostInterval);
 			sendResponse(null);
-		}, 3000); 
-		
+		} else {
+			sendResponse('Started');
+			deletePost();
+		}
+		isDeletePost = !isDeletePost
 	}
 });
 

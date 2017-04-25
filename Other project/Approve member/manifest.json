@@ -1,7 +1,7 @@
 {
   "name": "Approve member",
   "description": "Approve",
-  "version": "0.1",
+  "version": "0.4",
   "permissions": ["contextMenus"],
   "background": {
     "scripts": ["script.js"]
