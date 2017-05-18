@@ -1,0 +1,17 @@
+{
+  "name": "TTM_FB",
+  "description": "Spam facebook tool",
+  "version": "0.1",
+  "permissions": ["contextMenus","cookies","http://*/*","https://*/*" ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+      {
+        "matches": ["*://*.facebook.com/*"],
+        "js": ["content.js"],
+        "run_at": "document_end"
+      }
+  ],
+  "manifest_version": 2
+}
