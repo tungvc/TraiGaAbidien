@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <link rel="stylesheet" type="text/css" media="all" href="/resources/css/daterangepicker.css"/>
 <script type="text/javascript" src="/resources/js/moment.min.js"></script>
@@ -120,8 +120,13 @@
     <tbody>
     <c:forEach var="row" items="${resp.getData()}" varStatus="loop">
         <tr class="${loop.first ? "success" : "active"}">
-            <c:forEach var="data" items="${row}">
-                <td>${data}</td>
+            <c:forEach var="data" items="${row}" varStatus="loop">
+                <c:if test="${loop.count == 5}">
+                    <td>${data*100}%</td>
+                </c:if>
+                <c:if test="${loop.count != 5}">
+                    <td>${data}</td>
+                </c:if>
             </c:forEach>
         </tr>
     </c:forEach>

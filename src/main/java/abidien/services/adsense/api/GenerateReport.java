@@ -35,7 +35,7 @@ public class GenerateReport {
     request.setFilter(Arrays.asList("AD_CLIENT_ID==" + escapeFilterParameter(adClientId)));
 
     request.setMetric(Arrays.asList("PAGE_VIEWS", "AD_REQUESTS", /*"AD_REQUESTS_COVERAGE", */"CLICKS",
-        /*"AD_REQUESTS_CTR", */"COST_PER_CLICK", "PAGE_VIEWS_RPM", "EARNINGS"));
+        "AD_REQUESTS_CTR", "COST_PER_CLICK", "PAGE_VIEWS_RPM", "EARNINGS"));
     request.setDimension(Arrays.asList("DATE"));
 
     // Sort by ascending date.
@@ -91,6 +91,7 @@ public class GenerateReport {
     String pattern = "###.##";
     DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(locale);
     df.applyPattern(pattern);
+    DecimalFormat dfPercent = new DecimalFormat("##.##%");
     DateFormat fullDate = new SimpleDateFormat("yyyy-MM-dd");
     Date startDate = fullDate.parse(response.getStartDate());
     Date endDate = fullDate.parse(response.getEndDate());
@@ -186,7 +187,6 @@ public class GenerateReport {
           total.add(String.valueOf(sum));
           break;
         /*case "AD_REQUESTS_COVERAGE":*/
-        /*case "AD_REQUESTS_CTR":case:*/
         case "EARNINGS":
           double dSum = 0;
           for (int j = 0; j < processedData.size(); j++) {
@@ -197,6 +197,7 @@ public class GenerateReport {
           total.add(df.format(dSum));
           break;
         case "COST_PER_CLICK":
+        case "AD_REQUESTS_CTR":
         case "PAGE_VIEWS_RPM":
           double avg = 0;
           for (int j = 0; j < processedData.size(); j++) {

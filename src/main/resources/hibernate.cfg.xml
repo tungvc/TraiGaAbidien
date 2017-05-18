@@ -18,6 +18,7 @@
     <mapping class="abidien.autopost.models.DomainEntity"/>
     <mapping class="abidien.autopost.models.FakeLinkEntity"/>
     <mapping class="abidien.autopost.models.ReportEntity"/>
+    <mapping class="abidien.autopost.models.FacebookAccountEntity"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>

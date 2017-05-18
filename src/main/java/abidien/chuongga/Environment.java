@@ -1,9 +1,6 @@
 package abidien.chuongga;
 
-import abidien.autopost.models.DomainEntity;
-import abidien.autopost.models.FakeLinkEntity;
-import abidien.autopost.models.ReportEntity;
-import abidien.autopost.models.ReportId;
+import abidien.autopost.models.*;
 import abidien.autopost.services.DomainService;
 import abidien.autopost.services.LogService;
 import abidien.autopost.services.ReportService;
@@ -32,6 +29,7 @@ public class Environment {
         return instance;
     }
 
+    private static IDataService<Integer, FacebookAccountEntity> facebookAccountDataDriver;
     private static IDataService<Integer, DomainEntity> domainDataDriver;
     private static IDataService<Integer, FakeLinkEntity> fakeLinkDataDriver;
     private static IDataService<ReportId, ReportEntity> reportDataDriver;
@@ -52,6 +50,11 @@ public class Environment {
         return userDataDriver;
     }
 
+    public static IDataService<Integer, FacebookAccountEntity> getFacebookAccountDataDriver() {
+        if (facebookAccountDataDriver == null)
+            facebookAccountDataDriver = new DatabaseService<Integer, FacebookAccountEntity>(FacebookAccountEntity.class);
+        return facebookAccountDataDriver;
+    }
 
     public static IDataService<Integer, DomainEntity> getDomainDataDriver() {
         if (domainDataDriver == null)
