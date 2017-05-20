@@ -52,5 +52,9 @@
         <put-attribute name="title" value="Money Report" />
         <put-attribute name="main-content" value="/autopost/MoneyReport.jsp"/>
     </definition>
+    <definition name="APFBAcc" extends="APMainPage">
+        <put-attribute name="title" value="Facebook Account" />
+        <put-attribute name="main-content" value="/autopost/MangeFBAcc.jsp"/>
+    </definition>
 
 </tiles-definitions>

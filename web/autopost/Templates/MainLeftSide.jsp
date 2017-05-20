@@ -85,6 +85,7 @@
                     <li class='${pageName == 'APDomain' ? 'active' : ''}'><a href="domain">Domain Trung Gian</a></li>
                     <li class='${pageName == 'APDashboard' ? 'active' : ''}'><a href="dashboard">Cài đặt</a></li>
                     <li class='${pageName == 'APMoneyReport' ? 'active' : ''}'><a href="money_report">Lượt click</a></li>
+                    <li class='${pageName == 'APFBAcc' ? 'active' : ''}'><a href="fb_acc">Quản lý facebook</a></li>
                     <%--<li><a href="analytics.html">Thống kê</a></li>--%>
                 </ul>
             </li>

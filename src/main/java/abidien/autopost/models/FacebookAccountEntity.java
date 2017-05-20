@@ -1,7 +1,6 @@
 package abidien.autopost.models;
 
 import abidien.models.IItem;
-import com.sun.istack.internal.NotNull;
 
 import javax.persistence.*;
 
