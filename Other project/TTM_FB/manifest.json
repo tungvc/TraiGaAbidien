@@ -2,7 +2,11 @@
   "name": "TTM_FB",
   "description": "Spam facebook tool",
   "version": "0.1",
-  "permissions": ["contextMenus","cookies","http://*/*","https://*/*" ],
+  "browser_action": {
+    "default_icon": "images/icon.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": ["tabs","cookies","http://*/*","https://*/*" ],
   "background": {
     "scripts": ["background.js"]
   },

