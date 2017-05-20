@@ -48,6 +48,7 @@ public class AdsenseAccountEntity implements IItem<String> {
     }
 
     @Basic
+    @Column(columnDefinition="TINYINT(1)")
     public boolean getDisable() {
         return disable;
     }

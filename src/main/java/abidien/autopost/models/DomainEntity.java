@@ -2,10 +2,7 @@ package abidien.autopost.models;
 
 import abidien.models.IItem;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by ABIDIEN on 28/11/2016.
@@ -54,6 +51,7 @@ public class DomainEntity implements IItem<Integer> {
     private boolean disable = false;
 
     @Basic
+    @Column(columnDefinition="TINYINT(1)")
     public boolean getDisable() {
         return disable;
     }

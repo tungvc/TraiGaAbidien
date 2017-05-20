@@ -1,28 +1,15 @@
 package abidien.autopost.models;
 
 import abidien.models.IItem;
+import com.sun.istack.internal.NotNull;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by ABIDIEN on 19/05/2017.
  */
 @Entity
-public class FacebookAccountEntity implements IItem<Integer> {
-    private int id;
-
-    @GeneratedValue
-    @Id
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+public class FacebookAccountEntity implements IItem<String> {
 
     private Integer ownerId;
 
@@ -38,6 +25,7 @@ public class FacebookAccountEntity implements IItem<Integer> {
     private boolean disable;
 
     @Basic
+    @Column(columnDefinition="TINYINT(1)")
     public boolean getDisable() {
         return disable;
     }
@@ -61,11 +49,34 @@ public class FacebookAccountEntity implements IItem<Integer> {
     private String cookies;
 
     @Basic
+    @Column(columnDefinition="TEXT")
     public String getCookies() {
         return cookies;
     }
 
     public void setCookies(String cookies) {
         this.cookies = cookies;
+    }
+
+    private String id;
+
+    @Id
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    private String xs;
+
+    @Basic
+    public String getXs() {
+        return xs;
+    }
+
+    public void setXs(String xs) {
+        this.xs = xs;
     }
 }

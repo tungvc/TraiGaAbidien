@@ -97,6 +97,7 @@ public class ReportEntity implements IItem<ReportId>, Serializable {
 
     @Override
     @Transient
+    @Column(columnDefinition="TINYINT(1)")
     public boolean getDisable() {
         return false;
     }

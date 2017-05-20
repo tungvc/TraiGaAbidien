@@ -106,6 +106,7 @@ public class FakeLinkEntity implements IItem<Integer> {
     private boolean disable = false;
 
     @Basic
+    @Column(columnDefinition="TINYINT(1)")
     public boolean getDisable() {
         return disable;
     }

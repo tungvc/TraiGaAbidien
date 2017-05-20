@@ -7,7 +7,7 @@ import abidien.services.InmemoryDataService;
 /**
  * Created by ABIDIEN on 19/05/2017.
  */
-public class FakebookAccountService extends InmemoryDataService<Integer, FacebookAccountEntity> {
+public class FakebookAccountService extends InmemoryDataService<String, FacebookAccountEntity> {
     public FakebookAccountService(Environment env) {
         super(env.getFacebookAccountDataDriver());
     }

@@ -100,6 +100,7 @@ public class UserEntity implements IItem<Integer> {
     private boolean disable;
 
     @Basic
+    @Column(columnDefinition="TINYINT(1)")
     public boolean getDisable() {
         return disable;
     }

@@ -49,6 +49,13 @@ public class InmemoryDataService<K, T extends IItem<K>> implements IDataService<
     }
 
     @Override
+    public int update(T model) {
+        int id = db.update(model);
+        index(model);
+        return id;
+    }
+
+    @Override
     public int delete(T model) {
         db.delete(model);
         all.remove(model.getId());

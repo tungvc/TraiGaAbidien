@@ -89,6 +89,9 @@ public class SmartServlet extends BaseServlet {
             return (T)Integer.valueOf(value);
         else if (clazz.equals(String.class))
             return (T)value;
+        else if (clazz.equals(Long.TYPE) || clazz.equals(Long.class))
+            return (T)Long.valueOf(value);
+        new Exception("Not support " + clazz).printStackTrace();
         return null;
     }
 }

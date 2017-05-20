@@ -24,9 +24,15 @@ public class DatabaseService<K extends Serializable, T extends IItem<K>> impleme
     @Override
     public T load(K id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        T p = (T)session.get(clazz, id);
-        session.close();
-        return p;
+        try {
+            T p = (T) session.get(clazz, id);
+            return p;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return null;
     }
 
     @Override
@@ -46,6 +52,25 @@ public class DatabaseService<K extends Serializable, T extends IItem<K>> impleme
         try{
             transaction = session.beginTransaction();
             session.saveOrUpdate(model);
+            transaction.commit();
+        } catch (HibernateException ex) {
+            //Log the exception
+            if (transaction != null)
+                transaction.rollback();
+            System.err.println(ex);
+        } finally {
+            session.close();
+        }
+        return 0;
+    }
+
+    @Override
+    public int update(T model) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+        try{
+            transaction = session.beginTransaction();
+            session.update(model);
             transaction.commit();
         } catch (HibernateException ex) {
             //Log the exception

@@ -29,13 +29,14 @@ public class Environment {
         return instance;
     }
 
-    private static IDataService<Integer, FacebookAccountEntity> facebookAccountDataDriver;
+    private static IDataService<String, FacebookAccountEntity> facebookAccountDataDriver;
     private static IDataService<Integer, DomainEntity> domainDataDriver;
     private static IDataService<Integer, FakeLinkEntity> fakeLinkDataDriver;
     private static IDataService<ReportId, ReportEntity> reportDataDriver;
     private static IDataService<String, AdsenseAccountEntity> adsenseAccountDriver;
     private static IDataService<Integer, UserEntity> userDataDriver;
 
+    private static InmemoryDataService<String, FacebookAccountEntity> facebookAccountService;
     private static UserService userService;
     private static AdsenseAccountService adsenseAccountService;
     private static DomainService domainService;
@@ -50,9 +51,9 @@ public class Environment {
         return userDataDriver;
     }
 
-    public static IDataService<Integer, FacebookAccountEntity> getFacebookAccountDataDriver() {
+    public static IDataService<String, FacebookAccountEntity> getFacebookAccountDataDriver() {
         if (facebookAccountDataDriver == null)
-            facebookAccountDataDriver = new DatabaseService<Integer, FacebookAccountEntity>(FacebookAccountEntity.class);
+            facebookAccountDataDriver = new DatabaseService<String, FacebookAccountEntity>(FacebookAccountEntity.class);
         return facebookAccountDataDriver;
     }
 
@@ -94,6 +95,12 @@ public class Environment {
         return adsenseAccountService;
     }
 
+    public static InmemoryDataService<String, FacebookAccountEntity> getFacebookAccountService() {
+        if (facebookAccountService == null)
+            facebookAccountService = new InmemoryDataService(getFacebookAccountDataDriver());
+        return facebookAccountService;
+    }
+
     public static DomainService getDomainService() {
         if (domainService == null)
             domainService = new DomainService(getInstance());
@@ -102,7 +109,7 @@ public class Environment {
 
     public static IDataService<Integer, FakeLinkEntity> getFakeLinkService() {
         if (fakeLinkService == null)
-            fakeLinkService = new InmemoryDataService<Integer, FakeLinkEntity>(getFakeLinkDataDriver());
+            fakeLinkService = new InmemoryDataService(getFakeLinkDataDriver());
         return fakeLinkService;
     }
 

@@ -13,14 +13,14 @@ import java.io.IOException;
 /**
  * Created by ABIDIEN on 19/05/2017.
  */
-public class FacebookAccountServlet extends RestServlet<Integer, FacebookAccountEntity> {
+public class FacebookAccountServlet extends RestServlet<String, FacebookAccountEntity> {
     @Override
     public FacebookAccountEntity factory() {
         return new FacebookAccountEntity();
     }
 
     public FacebookAccountServlet() {
-        super(Environment.getFacebookAccountDataDriver());
+        super(Environment.getFacebookAccountService());
     }
 
 

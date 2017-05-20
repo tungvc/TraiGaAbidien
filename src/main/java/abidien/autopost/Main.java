@@ -51,6 +51,7 @@ public class Main {
 
         webapp.addServlet(new ServletHolder(new DomainServlet()), "/web/domain/*");
         webapp.addServlet(new ServletHolder(new MoneyReportServlet()), "/web/money_report/*");
+        webapp.addServlet(new ServletHolder(new FacebookAccountServlet()), "/web/fb_acc/*");
 
         webapp.addServlet(new ServletHolder(new FakeLinkServlet()), "/html/*");
 
