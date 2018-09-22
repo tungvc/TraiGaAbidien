@@ -14,6 +14,8 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +33,9 @@ public class RenameMain {
         //String sFb_dtsg = "AQFix49LiZca:AQEhH-dHCfya";
         String sFb_dtsg = "AQHqIIe8iwW6:AQFEI0D-7Gz0";
 
-        String sPageID = "1622946728029007";
-        String sOldName = "Cáo Yurii 1";
-        String sNewName = "Nguyen Vo Trang";
+        String sPageID = "620626984937388";
+        String sOldName = "Vintage Tattoo 1";
+        String sNewName = "Xăm Hình Chuyên Nghiệp";
 
         new Thread(){
             public void run(){
@@ -70,11 +72,7 @@ public class RenameMain {
         nameValuePairs.add(new BasicNameValuePair("requested_name", _sNewName));
         nameValuePairs.add(new BasicNameValuePair("fb_dtsg", _sFb_dtsg));
         nameValuePairs.add(new BasicNameValuePair("__a", "1"));
-        try {
-            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, Charset.forName("UTF-8")));
         HttpResponse oHttpResponse = null;
         try {
             System.out.println(lInit + " - " + (System.currentTimeMillis() - lStartTime));
@@ -89,7 +87,7 @@ public class RenameMain {
     public static void setDefaultCookieHeaders(HttpRequestBase oRequest) {
         oRequest.addHeader("Origin", "https://www.facebook.com");
         oRequest.addHeader("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
-        oRequest.addHeader("Content-Type", "application/x-www-form-urlencoded");
+        oRequest.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
     }
 
     public static String getDTSG(String _sInput) {
