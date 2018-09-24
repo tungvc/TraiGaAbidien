@@ -26,7 +26,14 @@ public class RenameServlet extends SmartServlet {
         String newName = request.getParameter("newName");
 
         FacebookCookie_BO.FacebookCookie oCookie = FacebookCookie_BO.getCookie(userName, passWord);
-        String sResult = RenameFanpage_BO.changeFanpageName(oCookie.msDtsg, oCookie.msCookie, fanpageID, oldName, newName);
-        WebUtils.renderJson(response, sResult);
+        if (oCookie.msCookie.toLowerCase().contains("checkpoint")) {
+            WebUtils.renderText(response, "Check point!!");
+        } else if (oCookie.msDtsg == null || oCookie.msDtsg.trim().isEmpty()) {
+            WebUtils.renderText(response, "Không thể đăng nhập!!");
+        } else {
+            String sResult = RenameFanpage_BO.changeFanpageName(oCookie.msDtsg, oCookie.msCookie, fanpageID, oldName, newName);
+            WebUtils.renderText(response, sResult);
+        }
+
     }
 }

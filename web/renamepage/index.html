@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="store">
+<head>
+    <meta charset="UTF-8">
+    <title>Rename fanpage</title>
+    <script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</head>
+<body ng-controller="StoreController">
+    <div>
+        <input class="form-control" type="text" ng-model="user" placeholder="Username/Email/Phone number/UserID"/>
+        <input class="form-control" type="text" ng-model="pass" placeholder="Password"/>
+        <input class="form-control" type="text" ng-model="pageID" placeholder="Page id"/>
+        <input class="form-control" type="text" ng-model="oldName" placeholder="Old name"/>
+        <input class="form-control" type="text" ng-model="newName" placeholder="New name"/>
+		
+        <br/>
+        <button ng-click="rename();" class="btn btn-danger center-block">Rename</button>
+		<img ng-show="loading" src="images/loading.gif" class="center-block" style="width: 20px;"/>
+    </div>
+    <div class="list-group">
+        <div>
+			<p>{{message}}</p>
+        </div>
+        
+    </div>
+
+</body>
+</html>
