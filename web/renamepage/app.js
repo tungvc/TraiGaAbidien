@@ -16,7 +16,7 @@
 				{
 					
 					method: 'POST',
-					url: '/web/rename/rename_fanpage?username=' + $scope.user + '&password=' + $scope.pass + '&pageID=' + $scope.pageID + '&oldName=' + $scope.oldName + '&newName=' + $scope.newName,
+					url: '/web/rename/rename_fanpage?username=' + $scope.user + '&password=' + $scope.pass + '&pageID=' + $scope.pageID + '&oldName=' + $scope.oldName + '&newName=' + $scope.newName + '&cookie=' + $scope.cookie,
 					headers: {
 					}
 				}).success(function (resp, status, headers) {
