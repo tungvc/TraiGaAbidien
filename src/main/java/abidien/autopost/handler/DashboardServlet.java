@@ -63,7 +63,7 @@ public class DashboardServlet extends RestServlet<Integer, FakeLinkEntity> {
         String param = ".html?id=" + SecurityUtils.encode(id);
         List<String> rs = Environment.getDomainService().loadAll().stream()
                 .filter(p -> p.getOwnerId() == userId)
-                .map(s -> s.getDomain() + "/html/" + RandomStringUtils.randomAlphanumeric(5) + param)
+                .map(s -> s.getDomain() + "/html/" + RandomStringUtils.randomAlphanumeric(5) + param + "&v2=t")
                 .collect(Collectors.toList());
         Collections.shuffle(rs);
         WebUtils.renderJson(response, JsonExt.toJson(rs));
