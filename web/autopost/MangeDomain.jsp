@@ -9,8 +9,8 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="panel">
     <div class="panel-heading nopaddingbottom">
-        <h4 class="panel-title">Cài domain trung gian</h4>
-        <p>Trỏ ip domain về: 192.168.0.1</p>
+        <h4 class="panel-title">Cài domain trung gian - Hệ thống sử dụng nội bộ</h4>
+        <p>Trỏ ip domain về: 103.200.5.66</p>
     </div>
     <div class="panel-body">
         <hr>

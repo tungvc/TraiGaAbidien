@@ -37,15 +37,15 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">Tiêu đề <span class="text-danger">*</span></label>
+                <label class="col-sm-3 control-label">Tiêu đề <span class="text-danger"></span></label>
                 <div class="col-sm-8">
-                    <input type="text" name="title" class="form-control" placeholder="Nhập tiêu đề bài viết..." required />
+                    <input type="text" name="title" class="form-control" placeholder="Nhập tiêu đề bài viết..." />
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">Mô tả <span class="text-danger">*</span></label>
+                <label class="col-sm-3 control-label">Mô tả <span class="text-danger"></span></label>
                 <div class="col-sm-8">
-                    <input type="text" name="description" class="form-control" placeholder="Nhập mô tả bài viết..." required />
+                    <input type="text" name="description" class="form-control" placeholder="Nhập mô tả bài viết..." />
                 </div>
             </div>
             <div class="form-group">
