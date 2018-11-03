@@ -36,8 +36,7 @@ public class FacebookCookie_BO {
     public static final String API_KEY = "882a8490361da98702bf97a021ddc14d";
     public static final String API_SECRET = "62f8ce9f74b12f84c123cc23437a4a32";
 
-    public static FacebookCookie getCookie(String _sUser, String _sPass) {
-        FacebookCookie oResult = null;
+    public static String getCookie(String _sUser, String _sPass) {
 
         HttpClient httpClient = new DefaultHttpClient();
 
@@ -64,22 +63,31 @@ public class FacebookCookie_BO {
             String sCookieToSubmit = mapToString(sCookieValue);
             System.out.println(sCookieToSubmit);
 
-            // Get dtsg
-            HttpGet httpGet = new HttpGet("https://facebook.com/");
-            setDefaultCookieHeaders(httpGet);
-            httpGet.addHeader("Cookie", sCookieToSubmit);
-
-            oHttpResponse = httpClient.execute(httpGet);
-            sResponse = IOUtils.toString(oHttpResponse.getEntity().getContent(), StandardCharsets.UTF_8);
-            System.out.println(getDTSG(sResponse));
-
-            oResult = new FacebookCookie(getDTSG(sResponse), sCookieToSubmit);
+            return sCookieToSubmit;
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return oResult;
+        return null;
+    }
+
+    public static String getDTSG(String _sCookie) {
+        HttpClient httpClient = new DefaultHttpClient();
+
+        HttpGet httpGet = new HttpGet("https://facebook.com/");
+        setDefaultCookieHeaders(httpGet);
+        httpGet.addHeader("Cookie", _sCookie);
+
+        HttpResponse oHttpResponse;
+        try {
+            oHttpResponse = httpClient.execute(httpGet);
+            String sResponse = IOUtils.toString(oHttpResponse.getEntity().getContent(), StandardCharsets.UTF_8);
+            return getDTSGFromResponse(sResponse);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void main1(String[] args) {
@@ -157,9 +165,9 @@ public class FacebookCookie_BO {
         return stringBuilder.toString();
     }
 
-    public static String getDTSG(String _sInput) {
+    public static String getDTSGFromResponse(String _sResponse) {
         Pattern p = Pattern.compile("name=\"fb_dtsg\" value=\"(.*?)\"");
-        Matcher m = p.matcher(_sInput);
+        Matcher m = p.matcher(_sResponse);
         if (m.find()) {
             return m.group(1);
         }

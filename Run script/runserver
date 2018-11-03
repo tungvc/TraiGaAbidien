@@ -1,0 +1,64 @@
+#!/bin/sh
+#
+# Startup script for Main
+
+APPNAME=ChuongGa
+BASEDIR=/server/java-projects/ChuongGa
+MAINCLASS=abidien.chuongga.Main
+CONFIG_FILE=$BASEDIR/config.properties
+PID_FILE=$BASEDIR/tmp/service.pid
+LOG_FILE=$BASEDIR/tmp/service.log
+
+# JVM 
+XMS=10m
+XMX=400m
+
+# JMX
+#JMXHOST=103.200.5.66
+#JMXPORT=8555
+
+# java
+JAVA_HOME=/server/java/jdk1.8.0_60
+if [ -x $JAVA_HOME/bin/java ]; then
+    JAVA=$JAVA_HOME/bin/java
+else
+    JAVA=`which java`
+fi
+
+JVM_OPTS="-Xms$XMS -Xmx$XMX -Darchaius.configurationSource.additionalUrls=file:///$CONFIG_FILE -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8800"
+
+CLASSPATH=.
+for jar in $BASEDIR/bin/*.jar; do
+    CLASSPATH=$CLASSPATH:$jar
+done
+
+JAVA_OPTS="$JVM_OPTS -cp $CLASSPATH $MAINCLASS"
+
+case "$1" in
+    start)
+        # Main startup
+        echo -n "Starting $APPNAME (port $JMXPORT): "
+	exec $JAVA ${JAVA_OPTS}  > $LOG_FILE 2>&1 &
+	[ ! -z $PID_FILE ] && printf "%d" $! > $PID_FILE
+        echo "start OK"
+        ;;
+    stop)
+        # Main shutdown
+        echo -n "Shutdown $APPNAME: "
+        kill `cat $PID_FILE`
+        echo "OK"
+        ;;
+    reload|restart)
+        $0 stop
+	sleep 3
+        $0 start
+        ;;
+    status)
+        ;;
+    *)
+        echo "Usage: `basename $0` start|stop|restart|reload"
+        exit 1
+esac
+
+exit 0
+

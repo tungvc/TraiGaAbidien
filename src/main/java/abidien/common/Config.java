@@ -22,6 +22,6 @@ public class Config {
     public static String uploadDir = factory.getStringProperty("upload.dir", "D:/upload_dir").getValue();
 
     //Auto post
-    public static int renamePort = factory.getIntProperty("ap.port", 8082).getValue();
+    public static int renamePort = factory.getIntProperty("rn.port", 8082).getValue();
 }
 
