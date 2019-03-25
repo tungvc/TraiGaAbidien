@@ -14,3 +14,7 @@ hs_err_pid*
 target/
 TrustingSocial/PhoneNumber/PhoneNumber/obj/
 TrustingSocial/PhoneNumber/PhoneNumber/bin/
+TrustingSocial/PhoneNumber/GenerateTestCase/obj/
+TrustingSocial/PhoneNumber/PhoneNumber2/obj/
+TrustingSocial/PhoneNumber/GenerateTestCase/bin/
+TrustingSocial/PhoneNumber/PhoneNumber2/bin/
